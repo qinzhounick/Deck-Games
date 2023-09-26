@@ -2,8 +2,7 @@
 
 HoldEmGame::HoldEmGame(int argc, const char * argv[]): Game(argc, argv), state(HoldEmState::preflop) {
     CardSet<HoldEmRank, Suit> playerHand;
-    int i = 2;
-    for(i; i<argc; i++) {
+    for(int i = 2; i<argc; i++) {
         holdEmHands.push_back(playerHand); // not completed
     }
 }
@@ -11,10 +10,10 @@ HoldEmGame::HoldEmGame(int argc, const char * argv[]): Game(argc, argv), state(H
 void HoldEmGame::deal() {
     switch(state) {
         case HoldEmState::preflop:
-            for(int i = 0; i<holdEmHands.size(); i++) {
+            for(int i = 0; i<(int)holdEmHands.size(); i++) {
                 holdEmDeck >> holdEmHands[i];
             } 
-            for(int j = 0; j<holdEmHands.size(); j++) {
+            for(int j = 0; j<(int)holdEmHands.size(); j++) {
                 holdEmDeck >> holdEmHands[j];
             } 
             state = HoldEmState::flop;
@@ -40,12 +39,12 @@ void HoldEmGame::deal() {
 
 int HoldEmGame::play() {
     const int SUCCESS = 0;
-    char *input;
+    string input;
     while(input != "yes") {  // #12 not sure
         holdEmDeck.shuffle();
         state = HoldEmState::preflop;
         deal();
-        for(int n=0; n<names.size(); n++) {
+        for(int n=0; n<(int)names.size(); n++) {
             cout << names[n] << "'s hand is: " << endl;
             holdEmHands[n].print(cout, 2);
             cout << endl;
@@ -66,7 +65,7 @@ int HoldEmGame::play() {
         board.print(cout, 5);
         cout << endl;
 
-        for(int m=0; m<holdEmHands.size(); m++) {
+        for(int m=0; m<(int)holdEmHands.size(); m++) {
             holdEmDeck.collect(holdEmHands[m]);
         }
 

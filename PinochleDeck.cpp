@@ -66,5 +66,3 @@ PinochleDeck::PinochleDeck() {
         }
     }
 }
-
-//template class PinochleDeck<PinochleRank, Suit>;

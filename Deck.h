@@ -3,13 +3,14 @@
 #include <random>
 #include <algorithm>
 
+
 using namespace std;
 
 template<typename R, typename S>
 class Deck: public CardSet<R, S> {
     public:
         void shuffle();
-        void collect(CardSet<R, S> & col)
+        void collect(CardSet<R, S> & col);
 };
 
 #ifdef TEMPLATE_HEADERS_INCLUDE_SOURCE

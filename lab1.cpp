@@ -7,9 +7,11 @@ using namespace std;
 shared_ptr<Game> create(int argc, const char *argv[]) {
     shared_ptr<Game> game;
 
-    if(argv[1] == "Pinochle") {
+    string gameName = argv[1];
+
+    if(gameName == "Pinochle") {
         game = make_shared<PinochleGame>(argc, argv);
-    } else if (argv[1] == "HoldEm") {
+    } else if (gameName == "HoldEm") {
         game = make_shared<HoldEmGame>(argc, argv);
     }
     return game;
@@ -21,7 +23,9 @@ int main(int argc, const char *argv[]) {
     const int FAIL_TO_CREATE = 2;
     shared_ptr<Game> p;
 
-    if((argv[1] == "Pinochle" && argc == 6) || (argv[1] == "HoldEm" && (argc <= 11 && argc >= 4))) {
+    string gameName = argv[1];
+
+    if((gameName == "Pinochle" && argc == 6) || (gameName == "HoldEm" && (argc <= 11 && argc >= 4))) {
         p = create(argc, argv);
         if(p){
             return p->play();

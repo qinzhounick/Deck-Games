@@ -24,16 +24,17 @@ bool CardSet<R,S>::is_empty() {
 template<typename R, typename S>
 CardSet<R,S> & CardSet<R,S>::operator>> (CardSet<R,S> & c) {
     try {
-        if(c.empty()) {
-            throw(std::runtime_error);
+        if(cards.empty()) {
+            throw std::runtime_error("runtime_error");
         } else {
             size_t t = cards.size();
             c.cards.push_back(Card<R, S>(cards[t-1]._rank, cards[t-1]._suit));
-            cards.pop();
-            return *this;
+            cards.pop_back();
         }
-    } catch(std::runtime_error) {
-        cout << "cardset is empty" << endl;
+    } catch(std::runtime_error const&) {
+        cout << "cardset is empty: " << endl;
     }
+    return *this;
+    
 }
 

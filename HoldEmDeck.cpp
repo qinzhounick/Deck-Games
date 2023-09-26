@@ -107,5 +107,3 @@ HoldEmDeck::HoldEmDeck() {
         }
     }
 }
-
-//template class HoldEmDeck<HoldEmRank, Suit>;

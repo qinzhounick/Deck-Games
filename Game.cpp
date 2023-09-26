@@ -3,8 +3,7 @@
 using namespace std;
 
 Game::Game(int argc, const char *argv[]) {
-    int i = 2;
-    for(i; i<argc; i++) {
+    for(int i = 2; i<argc; i++) {
         names.push_back(argv[i]);
     }
-};
+}
