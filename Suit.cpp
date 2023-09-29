@@ -1,25 +1,40 @@
+//File Name: Suit.cpp
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: source file for Suit
+//  define two overloaded operators
+
 #include "Suit.h"
 
+using namespace std;
+
+//definition for shift operator
 ostream & operator<< (ostream& os, const Suit& s){
     char output;
 
+    //output all suit
     if(s==Suit::clubs){
-        output='C';
+        output = 'C';
     }else if(s==Suit::diamonds){
-        output='D';
+        output = 'D';
     }else if(s==Suit::hearts){
-        output='H';
+        output = 'H';
     }else if(s==Suit::spades){
-        output='S';
+        output = 'S';
     }else if(s==Suit::undefined){
-        output='?';
+        output = '?';
     }
 
+
     os << output;
+
     return os;
 }
 
-Suit & operator++ (Suit& s) {
+//prefix increment operator
+Suit & operator++ (Suit& s){
+
+    //switch statement to change to next suit
     switch(s) {
         case Suit::clubs:
             s = Suit::diamonds;
@@ -37,4 +52,5 @@ Suit & operator++ (Suit& s) {
             break;
     }
     return s;
+
 }

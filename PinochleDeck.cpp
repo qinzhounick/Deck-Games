@@ -1,36 +1,39 @@
-//Summary: Define the "shift" operator and prefix increment operator, in the constructor, push back the card twice,
-//          and print the deck following the setup rule, with each row eight cards(four suits).
+//File Name: PinochleDeck.cpp
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: Source file for PinochleDeck
+//  Define the "shift" operator and prefix increment operator, in the constructor, push back the card twice,
+//  and print the deck following the setup rule, with each row eight cards(four suits*2).
 
 #include "PinochleDeck.h"
 
-ostream & operator<< (ostream& os, const PinochleRank& r) {
+using namespace std;
+
+//shift operator<< for Pinochle ranks
+std::ostream & operator<< (std::ostream& os, const PinochleRank& r) {
+    //output all ranks
     if(r==PinochleRank::nine){
-        string output = "9";
-        os << output;
+        os <<  "9";
     }else if(r==PinochleRank::jack){
-        string output = "J";
-        os << output;
+        os <<  "J";
     }else if(r==PinochleRank::queen){
-        string output = "Q";
-        os << output;
+        os <<  "Q";
     }else if(r==PinochleRank::king){
-        string output = "K";
-        os << output;
+        os <<  "K";
     }else if(r==PinochleRank::ten){
-        string output = "10";
-        os << output;
+        os <<  "10";
     }else if(r==PinochleRank::ace){
-        string output = "A";
-        os << output;
+        os <<  "A";
     }else if(r==PinochleRank::undefined){
-        string output = "?";
-        os << output;
+        os <<  "?";
     }
 
     return os;
 }
 
+//prefix increment operator++ for Pinochle
 PinochleRank & operator++ (PinochleRank & r){
+    //switch statement to move to the next rank
     switch(r) {
         case PinochleRank::nine:
             r = PinochleRank::jack;
@@ -57,12 +60,12 @@ PinochleRank & operator++ (PinochleRank & r){
     return r;
 }
 
-//template<typename r, typename s>
-PinochleDeck::PinochleDeck() {
-    for (PinochleRank rank = PinochleRank::nine; rank <= PinochleRank::ace; ++rank) {
-        for (Suit suit = Suit::clubs; suit <= Suit::spades; ++suit) {
-            CardSet::cards.push_back(Card<PinochleRank, Suit>(rank, suit));
-            CardSet::cards.push_back(Card<PinochleRank, Suit>(rank, suit));
+//default constructor
+PinochleDeck::PinochleDeck(){
+    for (PinochleRank rank = PinochleRank::nine; rank <= PinochleRank::ace; ++rank) { //loop through rank
+        for (Suit suit = Suit::clubs; suit <= Suit::spades; ++suit) { //loop through suit
+            cards.push_back(Card<PinochleRank, Suit>(rank, suit));
+            cards.push_back(Card<PinochleRank, Suit>(rank, suit)); //push twice
         }
     }
 }

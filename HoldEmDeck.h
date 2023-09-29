@@ -1,13 +1,22 @@
-//Summary: Declare the rank for HoldEm deck, override the "shift" operator and prefix increment operator,
-//          declare the deriived class of HoldEm deck, with a private vector of HoldEm cards, a public
-//          constructor and overloaded print method.
+//File Name: HoldEmDeck.h
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: Header file for HoldEmDeck
+//  declare the rank for HoldEm deck, override the "shift" operator and prefix increment operator,
+//  declare the deriived class(from Deck) of HoldEm deck, and a public constructor.
 
 #pragma once
-#include <vector>
-#include <string>
 #include "Deck.h"
 #include "Card_T.h"
 
+//const int variable to avoid magic number
+const int FLOP_PRINT = 3;  //flop print size
+const int TURN_PRINT = 4;  //turn print size
+const int RIVER_PRINT = 5;  //river print size 
+
+
+
+//declare enum for HoldEm ranks
 enum class HoldEmRank {
     two = 0,
     three = 1,
@@ -25,14 +34,12 @@ enum class HoldEmRank {
     undefined = 13
 };
 
-const int HOLDEM_ROW_SIZE = 4;
-const int HOLDEM_OFFSET = 3;
-
-ostream & operator<< (ostream& os, const HoldEmRank& h);
-
+//decalre prefix increment operator and operator<<
+std::ostream & operator<< (std::ostream& os, const HoldEmRank& h);
 HoldEmRank & operator++ (HoldEmRank& h);
 
+//declare HoldEmDeck class that inherits from Deck
 class HoldEmDeck: public Deck<HoldEmRank, Suit>{
     public:
-        HoldEmDeck();
+        HoldEmDeck(); //default constuctor
 };

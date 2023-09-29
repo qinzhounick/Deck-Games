@@ -1,58 +1,52 @@
-//Summary: Define the "shift" operator and prefix increment operator, in the constructor, push back the card once,
-//          and print the deck following the setup rule, with each row four cards(four suits).
+//File Name: HoldEmDeck.cpp
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: Source file for HoldEmDeck
+//  define the "shift" operator and prefix increment operator, in the constructor, push back the card once,
+//  and print the deck following the setup rule, with each row four cards(four suits).
 
 #include "HoldEmDeck.h"
 
+using namespace std;
+
+//define operator<< for HoldEmRank
 ostream & operator<< (ostream& os, const HoldEmRank& h) {
-
+    //output all the ranks
     if(h==HoldEmRank::two){
-        string output = "2";
-        os << output;
+        os <<  "2";
     }else if(h==HoldEmRank::three){
-        string output = "3";
-        os << output;
+        os <<  "3";
     }else if(h==HoldEmRank::four){
-        string output = "4";
-        os << output;
+        os <<  "4";
     }else if(h==HoldEmRank::five){
-        string output = "5";
-        os << output;
+        os <<  "5";
     }else if(h==HoldEmRank::six){
-        string output = "6";
-        os << output;
+        os <<  "6";
     }else if(h==HoldEmRank::seven){
-        string output = "7";
-        os << output;
+        os <<  "7";
     }else if(h==HoldEmRank::eight){
-        string output = "8";
-        os << output;
+        os <<  "8";
     }else if(h==HoldEmRank::nine){
-        string output = "9";
-        os << output;
+        os <<  "9";
     }else if(h==HoldEmRank::ten){
-        string output = "10";
-        os << output;
+        os <<  "10";
     }else if(h==HoldEmRank::jack){
-        string output = "J";
-        os << output;
+        os <<  "J";
     }else if(h==HoldEmRank::queen){
-        string output = "Q";
-        os << output;
+        os <<  "Q";
     }else if(h==HoldEmRank::king){
-        string output = "K";
-        os << output;
+        os <<  "K";
     }else if(h==HoldEmRank::ace){
-        string output = "A";
-        os << output;
+        os <<  "A";
     }else if(h==HoldEmRank::undefined){
-        string output = "?";
-        os << output;
+        os <<  "?";
     }
-
     return os;
 }
 
+//define prefix increment operator for HoldEm
 HoldEmRank & operator++ (HoldEmRank& h) {
+    //switch statement to change to the next rank
     switch(h) {
         case HoldEmRank::two:
             h = HoldEmRank::three;
@@ -99,11 +93,11 @@ HoldEmRank & operator++ (HoldEmRank& h) {
     return h;
 }
 
-//template<typename r, typename s>
+//Default constructor for HoldEmDeck
 HoldEmDeck::HoldEmDeck() {
-    for (HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank) {
-        for (Suit suit = Suit::clubs; suit <= Suit::spades; ++suit) {
-            CardSet::cards.push_back(Card<HoldEmRank, Suit>(rank, suit));
+    for (HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank) { //loop through HoldEm ranks
+        for (Suit suit = Suit::clubs; suit <= Suit::spades; ++suit) { //loop through suit
+            CardSet::cards.push_back(Card<HoldEmRank, Suit>(rank, suit)); //push back the card into vector
         }
     }
 }

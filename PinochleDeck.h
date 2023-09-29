@@ -1,13 +1,15 @@
-//Summary: Declare the rank for Pinochle deck, override the "shift" operator and prefix increment operator,
-//          declare the deriived class of Pinochle deck, with a private vector of Pinochle cards, a public
-//          constructor and overloaded print method.
+//File Name: PinochleDeck.h
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: Header file for PinochleDeck
+//  declare the rank for Pinochle deck, override the "shift" operator and prefix increment operator,
+//  declare the derived class(from Deck) of Pinochle deck, and a public constructor.
 
 #pragma once
-#include <vector>
-#include <string>
 #include "Deck.h"
 #include "Card_T.h"
 
+//declare enum for PinochleRank
 enum class PinochleRank {
     nine = 0,
     jack = 1,
@@ -18,14 +20,12 @@ enum class PinochleRank {
     undefined = 6
 };
 
-const int PINOCHLE_ROW_SIZE = 8;
-const int PINOCHLE_OFFSET = 7;
 
-ostream & operator<< (ostream& os, const PinochleRank& r);
-
+//declare prefix operator++ and operator<<
+std::ostream & operator<< (std::ostream& os, const PinochleRank& r);
 PinochleRank & operator++ (PinochleRank& r);
 
 class PinochleDeck: public Deck<PinochleRank, Suit>{
     public:
-        PinochleDeck();
+        PinochleDeck();  //default constructor
 };
