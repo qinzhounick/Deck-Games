@@ -9,6 +9,7 @@
 #include "Deck.h"
 #include "Card_T.h"
 
+
 //declare enum for PinochleRank
 enum class PinochleRank {
     nine = 0,

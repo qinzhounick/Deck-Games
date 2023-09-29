@@ -10,6 +10,7 @@
 #include "CardSet.h"
 
 
+const int PINOCHLE_PRINT = 12;
 //PinochleGame class derived from Game base class
 class PinochleGame: public Game{
     protected:

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
+const int INDEX = 2;
 //Game class
 class Game {
     public:

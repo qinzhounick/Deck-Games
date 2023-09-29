@@ -12,7 +12,7 @@ using namespace std;
 //  construct base class and initialize state
 HoldEmGame::HoldEmGame(int argc, const char * argv[]): Game(argc, argv), state(HoldEmState::preflop) {  
     CardSet<HoldEmRank, Suit> playerHand;  //declare empty player hands
-    for(int i = 2; i<argc; i++) {  //repeat for the number of players given
+    for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         holdEmHands.push_back(playerHand);  //push hand to holdEmHands
     }
 }

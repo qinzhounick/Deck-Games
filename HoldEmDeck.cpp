@@ -2,8 +2,7 @@
 //Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: Source file for HoldEmDeck
-//  define the "shift" operator and prefix increment operator, in the constructor, push back the card once,
-//  and print the deck following the setup rule, with each row four cards(four suits).
+//  define the "shift" operator and prefix increment operator, in the constructor, push back the card once
 
 #include "HoldEmDeck.h"
 

@@ -12,7 +12,7 @@ using namespace std;
 //  construct base class and initialize state
 PinochleGame::PinochleGame(int argc, const char * argv[]): Game(argc, argv) {
     CardSet<PinochleRank, Suit> playerHand;  //declare empty player hands
-    for(int i = 2; i<argc; i++) {  //repeat for the number of players given
+    for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         pinochleHands.push_back(playerHand);  //push hand to pinochleHands
     }
 }
@@ -37,7 +37,7 @@ int PinochleGame::play() {
         deal();  //deal cards to the players
         for(int n=0; n < (int)names.size(); n++) {  //print out players' hands
             cout << names[n] << "'s hand is: " << endl;
-            pinochleHands[n].print(cout, 12);
+            pinochleHands[n].print(cout, PINOCHLE_PRINT);
             cout << endl;
         }
         

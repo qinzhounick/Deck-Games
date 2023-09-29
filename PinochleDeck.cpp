@@ -2,8 +2,7 @@
 //Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: Source file for PinochleDeck
-//  Define the "shift" operator and prefix increment operator, in the constructor, push back the card twice,
-//  and print the deck following the setup rule, with each row eight cards(four suits*2).
+//  Define the "shift" operator and prefix increment operator, in the constructor, push back the card twice
 
 #include "PinochleDeck.h"
 
