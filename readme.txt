@@ -1,11 +1,10 @@
-1. Lab 0
+1. Lab 1
 Qinzhou(Nick) Song, Email: qinzhounick@wustl.edu
 Xinyu(Jack) Li, Email: l.xinyujack@wustl.edu
 
 2. Errors: 
-a) We also had an error where our play() function in Game was undefined to the compiler.
-
-We solved this problem by adding Game.h in our Makefile
+a) We had an error where our play() function in Game was undefined to the compiler.
+     We solved this problem by adding Game.h in our Makefile
 
 3. Incorrect output:
 a) Our first output was printing cardset is empty nonstop instead of players' hands or the board. 
