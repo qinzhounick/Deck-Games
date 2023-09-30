@@ -2,60 +2,77 @@
 Qinzhou(Nick) Song, Email: qinzhounick@wustl.edu
 Xinyu(Jack) Li, Email: l.xinyujack@wustl.edu
 
-2. Errors:
-a)The main error that we had was the ambigeous operator <<. 
-  Our shift operator for Card was declared as template<typename C> ostream & operator<< (ostream & os, const C &card);
-  This was causing error because the compiler does not know what C is. When we tried to do "os << ' ' ", 
-  the compiler was having hard time choosing the right operator<<
+2. Errors: 
+a) We also had an error where our play() function in Game was undefined to the compiler.
 
-We fixed this error by using Card<r,s> as a parameter type for the shift operator for Card. 
-  This specifies the type of card that we want to pass by the shift operator.
-
-b) We also had an error of undefined reference of the class default constructor for both PinochleDeck and HoldEmDeck.
-    This was because that we did not define a constructor for PinochleDeck with PinochleRank and Suit(same for HoldEmDeck).
-
-We solved this problem by adding the line "template class PinochleDeck<PinochleRank, Suit>;" at the end of PinochleDeck.cpp
-  Once we did that, the compiler is aware of the declaration of class PinochleDeck with PinochleRank and Suit types. 
-  It will then use the defined constructor inside PinochleDeck.cpp.
+We solved this problem by adding Game.h in our Makefile
 
 3. Incorrect output:
-a) Our first output had segmatation fault because we forgot to use switch statement for the prefix operator++.
+a) Our first output was printing cardset is empty nonstop instead of players' hands or the board. 
+     It was because in our CardSet operator, we checked if the CardSet passed in was empty.
+     When the operator is called in deal() for the first time, for example, pinochleDeck >> pinochleHands[j];
+     pinochleHands had empty hands, so c.empty is true and we are stuck in an infinite loop.
 
-We fixed this error by using the knowledge we learned from studio2 and fixed the prefix operator++
-
-b) Our second output printed out the cards but in bad format. 
-  This was because that we added a line "os << endl" at the end of the operator<< in PinochleDeck and HoldEmDeck.
-
-We fixed it by removing that line.
-
-4. Design decisions:
-print(for both Pinochle and HoldEm): we decided to print new line for every rank. Essentially, for each deck, 
-  we print out all valid suits for one rank and then move on to the next rank. For instance, PinochleDeck has two copies of each card.
-  There are eight cards that has the same rank(club*2,diamond*2,heart*2,spade*2), so for every 8 cards, we make a new line. 
-  In HoldEmDeck, we make a new line for every 4 cards.
+Code:
+template<typename R, typename S>
+CardSet<R,S> & CardSet<R,S>::operator>> (CardSet<R,S> & c) {
+    try {
+        if(c.empty()) { //check if cards is empty
+            throw std::runtime_error("runtime_error"); //throw error
+        } else {
+            //if not empty, push back last card to another CardSet
+            //  and pop the last card
+            size_t t = cards.size();
+            c.cards.push_back(Card<R, S>(cards[t-1]._rank, cards[t-1]._suit));
+            cards.pop_back();
+        }
+    } catch(std::runtime_error const&) {
+        cout << "cardset is empty: " << endl; //print error message
+    }
+    return *this; 
+}
 
 5. Correct output:
-[qinzhounick@shell lab_0]$ ./lab0
-HoldEmDeck: 
-2C 2D 2H 2S 
-3C 3D 3H 3S 
-4C 4D 4H 4S 
-5C 5D 5H 5S 
-6C 6D 6H 6S 
-7C 7D 7H 7S 
-8C 8D 8H 8S 
-9C 9D 9H 9S 
-10C 10D 10H 10S 
-JC JD JH JS 
-QC QD QH QS 
-KC KD KH KS 
-AC AD AH AS 
+HoldEm: supposed to print each player's hand(two cards) and print board for three turns(3 for flop, 4 for turn, 5 for river),
+then, promt for user input, if no repeat whole process, if yes end game.
 
-PinochleDeck: 
-9C 9C 9D 9D 9H 9H 9S 9S 
-JC JC JD JD JH JH JS JS 
-QC QC QD QD QH QH QS QS 
-KC KC KD KD KH KH KS KS 
-10C 10C 10D 10D 10H 10H 10S 10S 
-AC AC AD AD AH AH AS AS
+-------Output------------
+[qinzhounick@linuxlab007 cse428_lab1]$ ./lab1 HoldEm 1 2 3 4
+1's hand is: 5D AS 
+2's hand is: 10C 3S 
+3's hand is: 10H QD 
+4's hand is: 4H 3C 
+BOARD(flop):9H QH 5S 
+BOARD(turn):9H QH 5S 6H 
+BOARD(river):9H QH 5S 6H 4S 
+Do you want to end the game?
+no
+1's hand is: 7S KC 
+2's hand is: 8D JC 
+3's hand is: 2S 8H 
+4's hand is: 3H 5H 
+BOARD(flop):3S 6D AS 
+BOARD(turn):3S 6D AS QH 
+BOARD(river):3S 6D AS QH JH 
+Do you want to end the game?
+yes
+[qinzhounick@linuxlab007 cse428_lab1]$ 
 
+
+Pinochle: supposed to print each player's hand(12 cards) and promt for user input, if no repeat whole process, if yes end game.
+
+-------Output------------
+[qinzhounick@linuxlab007 cse428_lab1]$ ./lab1 Pinochle 1 2 3 4
+1's hand is: KS AC 10S 9C JS QH 9S 9S JD 9H 9C 10D 
+2's hand is: 9D JH JS KD 10C AH QS KS QD QC 10H AS 
+3's hand is: AH AD 10C 9H JH AC 10S 9D JD 10D QS 10H 
+4's hand is: KC KH AD QD KC QC QH JC KD JC KH AS 
+Do you want to end the game?
+no
+1's hand is: KS 10H 9D JH 10S QC 10D JC AS QC 9C QD 
+2's hand is: AH JH AH AC JS 9H 10C 10C QH KD 9D AC 
+3's hand is: KS QD KC JS 10H KD AS QS AD AD JD 10S 
+4's hand is: QS 10D KC KH JD 9S 9C JC KH 9H 9S QH 
+Do you want to end the game?
+yes
+[qinzhounick@linuxlab007 cse428_lab1]$ 

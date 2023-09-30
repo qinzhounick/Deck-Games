@@ -59,26 +59,22 @@ int HoldEmGame::play() {
         state = HoldEmState::preflop;  //start from the first state
         deal();  //deal cards to the players
         for(int n=0; n<(int)names.size(); n++) {  //print out players' hands
-            cout << names[n] << "'s hand is: " << endl;
+            cout << names[n] << "'s hand is: ";
             holdEmHands[n].print(cout, 2);
-            cout << endl;
         }
 
         
         deal();  // deal cards for flop state
-        cout << "BOARD(flop):" << endl;  //print board
+        cout << "BOARD(flop):";  //print board
         board.print(cout, FLOP_PRINT);
-        cout << endl;
 
         deal();  // deal cards for turn state
-        cout << "BOARD(turn):" << endl;  //print board
+        cout << "BOARD(turn):";  //print board
         board.print(cout, TURN_PRINT);
-        cout << endl;
 
         deal();  // deal cards for river state
-        cout << "BOARD(river):" << endl;  //print board
+        cout << "BOARD(river):";  //print board
         board.print(cout, RIVER_PRINT);
-        cout << endl;
 
         //collect players' hands back to deck
         for(int m=0; m<(int)holdEmHands.size(); m++) {

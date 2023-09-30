@@ -36,9 +36,8 @@ int PinochleGame::play() {
         pinochleDeck.shuffle();  //shuffle the deck
         deal();  //deal cards to the players
         for(int n=0; n < (int)names.size(); n++) {  //print out players' hands
-            cout << names[n] << "'s hand is: " << endl;
+            cout << names[n] << "'s hand is: ";
             pinochleHands[n].print(cout, PINOCHLE_PRINT);
-            cout << endl;
         }
         
         //collect players' hands back to deck

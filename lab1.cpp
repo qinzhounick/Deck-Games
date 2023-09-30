@@ -8,12 +8,12 @@
 #include <memory>
 
 using namespace std;
-
+const int GAME_NAME = 1;
 //create function to create game
 shared_ptr<Game> create(int argc, const char *argv[]) {
     shared_ptr<Game> game;  //declare game shared pointer
 
-    string gameName = argv[1];  //get game name
+    string gameName = argv[GAME_NAME];  //get game name
 
     //pass game objects to the game shared pointer
     if(gameName == "Pinochle") {
@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]) {
 
     shared_ptr<Game> p;
 
-    string gameName = argv[1];
+    string gameName = argv[GAME_NAME];
 
     //check for game type
     if((gameName == "Pinochle" && argc == PINOCHLE_ARGC) || (gameName == "HoldEm" && (argc <= HOLDEM_MAX_ARGC && argc >= HOLDEM_MIN_ARGC))) {
