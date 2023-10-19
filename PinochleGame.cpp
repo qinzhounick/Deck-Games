@@ -66,6 +66,8 @@ ostream & PinochleGame::operator<< (ostream& os, const PinochleMelds & pm) {
 
 void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> playerHand, vector<PinochleMelds> & pms){
     CardSet<PinochleRank, Suit> copyHand(playerHand);
+
+    
 }
 
 
