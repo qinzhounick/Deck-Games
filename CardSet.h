@@ -13,7 +13,7 @@ template <typename R, typename S>
 class CardSet {
     protected:
         //vector cards to hold Card type objects
-        std::vector< Card<R, S> > cards;
+        std::vector<Card<R, S> > cards;
     public:
         //overloaded shift operator
         CardSet<R,S> & operator>> (CardSet<R,S> & c);
@@ -21,6 +21,11 @@ class CardSet {
         void print(ostream& os, size_t size);
         //is_empty function to check if vector cards is empty
         bool is_empty();
+        //Defualt constructor
+        CardSet() = default;
+        //copy constructor
+        CardSet(const CardSet<R,S> & cardSet_cp);
+        static std::vector<Card<R,S> > * getCards(CardSet<R,S> & cardSet); 
 
 };
 

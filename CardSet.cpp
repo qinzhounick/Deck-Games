@@ -56,3 +56,15 @@ CardSet<R,S> & CardSet<R,S>::operator>> (CardSet<R,S> & c) {
     
 }
 
+//copy constructor
+template<typename R, typename S>
+CardSet<R,S>::CardSet(const CardSet<R,S> & cardSet_cp){
+    cards = cardSet_cp.cards;
+}
+
+//getter member function
+template<typename R, typename S>
+vector<Card<R,S> > * getCards(CardSet<R,S> & cardSet){
+    return &cardSet.cards;
+}
+

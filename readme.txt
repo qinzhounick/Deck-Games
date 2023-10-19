@@ -2,6 +2,14 @@
 Qinzhou(Nick) Song, Email: qinzhounick@wustl.edu
 Xinyu(Jack) Li, Email: l.xinyujack@wustl.edu
 
+2. Design Decisions:
+8) We added our own copy constructor because the default copy constructor performs shallow copy
+, while we want a deep copy constructor instead.
+
+
+
+
+
 2. Errors: 
 a) We had an error where our play() function in Game was undefined to the compiler.
      We solved this problem by adding Game.h in our Makefile

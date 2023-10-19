@@ -55,3 +55,17 @@ int PinochleGame::play() {
 }
 
 
+//define operator<< for PinochleGame
+ostream & PinochleGame::operator<< (ostream& os, const PinochleMelds & pm) {
+    auto it = Points[pm];
+    os << it.first << ": " << it.second << endl;
+    return os;
+}
+
+
+
+void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> playerHand, vector<PinochleMelds> & pms){
+    CardSet<PinochleRank, Suit> copyHand(playerHand);
+}
+
+
