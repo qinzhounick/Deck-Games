@@ -1,0 +1,185 @@
+In file included from HoldEmGame.cpp:7:
+HoldEmGame.h:54:107: error: ‘bool HoldEmGame::operator<(const HoldEmGame::playerStruct&, const HoldEmGame::playerStruct&)’ must have exactly one argument
+         bool operator< (const HoldEmGame::playerStruct & player1, const HoldEmGame::playerStruct & player2);
+                                                                                                           ^
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/algorithm:62,
+                 from Deck.h:11,
+                 from HoldEmDeck.h:9,
+                 from HoldEmGame.h:9,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h: In instantiation of ‘void std::__insertion_sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1885:25:   required from ‘void std::__final_insertion_sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1971:31:   required from ‘void std::__sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:4834:18:   required from ‘void std::sort(_RAIter, _RAIter) [with _RAIter = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+HoldEmGame.cpp:81:44:   required from here
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1852:17: error: use of deleted function ‘HoldEmGame::playerStruct& HoldEmGame::playerStruct::operator=(HoldEmGame::playerStruct&&)’
+        *__first = _GLIBCXX_MOVE(__val);
+                 ^
+In file included from HoldEmGame.cpp:7:
+HoldEmGame.h:47:16: note: ‘HoldEmGame::playerStruct& HoldEmGame::playerStruct::operator=(HoldEmGame::playerStruct&&)’ is implicitly deleted because the default definition would be ill-formed:
+         struct playerStruct{
+                ^~~~~~~~~~~~
+HoldEmGame.h:47:16: error: non-static reference member ‘std::__cxx11::string& HoldEmGame::playerStruct::_name’, can’t use default assignment operator
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:61,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/algorithm:62,
+                 from Deck.h:11,
+                 from HoldEmDeck.h:9,
+                 from HoldEmGame.h:9,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_heap.h: In instantiation of ‘void std::__pop_heap(_RandomAccessIterator, _RandomAccessIterator, _RandomAccessIterator, _Compare&) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1675:19:   required from ‘void std::__heap_select(_RandomAccessIterator, _RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1933:25:   required from ‘void std::__partial_sort(_RandomAccessIterator, _RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1948:27:   required from ‘void std::__introsort_loop(_RandomAccessIterator, _RandomAccessIterator, _Size, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Size = long int; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1968:25:   required from ‘void std::__sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:4834:18:   required from ‘void std::sort(_RAIter, _RAIter) [with _RAIter = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+HoldEmGame.cpp:81:44:   required from here
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_heap.h:252:17: error: use of deleted function ‘HoldEmGame::playerStruct& HoldEmGame::playerStruct::operator=(HoldEmGame::playerStruct&&)’
+       *__result = _GLIBCXX_MOVE(*__first);
+                 ^
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/char_traits.h:39,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ios:40,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ostream:38,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/iostream:39,
+                 from Game.h:8,
+                 from HoldEmGame.h:8,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h: In instantiation of ‘void std::iter_swap(_ForwardIterator1, _ForwardIterator2) [with _ForwardIterator1 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _ForwardIterator2 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:84:20:   required from ‘void std::__move_median_to_first(_Iterator, _Iterator, _Iterator, _Iterator, _Compare) [with _Iterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1921:34:   required from ‘_RandomAccessIterator std::__unguarded_partition_pivot(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1953:38:   required from ‘void std::__introsort_loop(_RandomAccessIterator, _RandomAccessIterator, _Size, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Size = long int; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1968:25:   required from ‘void std::__sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:4834:18:   required from ‘void std::sort(_RAIter, _RAIter) [with _RAIter = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+HoldEmGame.cpp:81:44:   required from here
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:148:11: error: no matching function for call to ‘swap(HoldEmGame::playerStruct&, HoldEmGame::playerStruct&)’
+       swap(*__a, *__b);
+       ~~~~^~~~~~~~~~~~
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/nested_exception.h:40,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/exception:144,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ios:39,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ostream:38,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/iostream:39,
+                 from Game.h:8,
+                 from HoldEmGame.h:8,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/move.h:182:5: note: candidate: ‘template<class _Tp> typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&)’
+     swap(_Tp& __a, _Tp& __b)
+     ^~~~
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/move.h:182:5: note:   template argument deduction/substitution failed:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/move.h: In substitution of ‘template<class _Tp> typename std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<_Tp> >, std::is_move_constructible<_Tp>, std::is_move_assignable<_Tp> >::value>::type std::swap(_Tp&, _Tp&) [with _Tp = HoldEmGame::playerStruct]’:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:148:11:   required from ‘void std::iter_swap(_ForwardIterator1, _ForwardIterator2) [with _ForwardIterator1 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _ForwardIterator2 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:84:20:   required from ‘void std::__move_median_to_first(_Iterator, _Iterator, _Iterator, _Iterator, _Compare) [with _Iterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1921:34:   required from ‘_RandomAccessIterator std::__unguarded_partition_pivot(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1953:38:   required from ‘void std::__introsort_loop(_RandomAccessIterator, _RandomAccessIterator, _Size, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Size = long int; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1968:25:   required from ‘void std::__sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:4834:18:   required from ‘void std::sort(_RAIter, _RAIter) [with _RAIter = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+HoldEmGame.cpp:81:44:   required from here
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/move.h:182:5: error: no type named ‘type’ in ‘struct std::enable_if<false, void>’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h: In instantiation of ‘void std::iter_swap(_ForwardIterator1, _ForwardIterator2) [with _ForwardIterator1 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _ForwardIterator2 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:84:20:   required from ‘void std::__move_median_to_first(_Iterator, _Iterator, _Iterator, _Iterator, _Compare) [with _Iterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1921:34:   required from ‘_RandomAccessIterator std::__unguarded_partition_pivot(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1953:38:   required from ‘void std::__introsort_loop(_RandomAccessIterator, _RandomAccessIterator, _Size, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Size = long int; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1968:25:   required from ‘void std::__sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:4834:18:   required from ‘void std::sort(_RAIter, _RAIter) [with _RAIter = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+HoldEmGame.cpp:81:44:   required from here
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/move.h:205:5: note: candidate: ‘template<class _Tp, long unsigned int _Nm> typename std::enable_if<std::__is_swappable<_Tp>::value>::type std::swap(_Tp (&)[_Nm], _Tp (&)[_Nm])’
+     swap(_Tp (&__a)[_Nm], _Tp (&__b)[_Nm])
+     ^~~~
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/move.h:205:5: note:   template argument deduction/substitution failed:
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/char_traits.h:39,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ios:40,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ostream:38,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/iostream:39,
+                 from Game.h:8,
+                 from HoldEmGame.h:8,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:148:11: note:   mismatched types ‘_Tp [_Nm]’ and ‘HoldEmGame::playerStruct’
+       swap(*__a, *__b);
+       ~~~~^~~~~~~~~~~~
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:64,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/char_traits.h:39,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ios:40,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ostream:38,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/iostream:39,
+                 from Game.h:8,
+                 from HoldEmGame.h:8,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_pair.h:495:5: note: candidate: ‘template<class _T1, class _T2> typename std::enable_if<std::__and_<std::__is_swappable<_T1>, std::__is_swappable<_T2> >::value>::type std::swap(std::pair<_T1, _T2>&, std::pair<_T1, _T2>&)’
+     swap(pair<_T1, _T2>& __x, pair<_T1, _T2>& __y)
+     ^~~~
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_pair.h:495:5: note:   template argument deduction/substitution failed:
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/char_traits.h:39,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ios:40,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ostream:38,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/iostream:39,
+                 from Game.h:8,
+                 from HoldEmGame.h:8,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:148:11: note:   ‘HoldEmGame::playerStruct’ is not derived from ‘std::pair<_T1, _T2>’
+       swap(*__a, *__b);
+       ~~~~^~~~~~~~~~~~
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:64,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/char_traits.h:39,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ios:40,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ostream:38,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/iostream:39,
+                 from Game.h:8,
+                 from HoldEmGame.h:8,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_pair.h:503:5: note: candidate: ‘template<class _T1, class _T2> typename std::enable_if<(! std::__and_<std::__is_swappable<_T1>, std::__is_swappable<_T2> >::value)>::type std::swap(std::pair<_T1, _T2>&, std::pair<_T1, _T2>&)’ <deleted>
+     swap(pair<_T1, _T2>&, pair<_T1, _T2>&) = delete;
+     ^~~~
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_pair.h:503:5: note:   template argument deduction/substitution failed:
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/char_traits.h:39,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ios:40,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ostream:38,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/iostream:39,
+                 from Game.h:8,
+                 from HoldEmGame.h:8,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:148:11: note:   ‘HoldEmGame::playerStruct’ is not derived from ‘std::pair<_T1, _T2>’
+       swap(*__a, *__b);
+       ~~~~^~~~~~~~~~~~
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:61,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/algorithm:62,
+                 from Deck.h:11,
+                 from HoldEmDeck.h:9,
+                 from HoldEmGame.h:9,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_heap.h: In instantiation of ‘void std::__adjust_heap(_RandomAccessIterator, _Distance, _Distance, _Tp, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Distance = long int; _Tp = HoldEmGame::playerStruct; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_heap.h:342:22:   required from ‘void std::__make_heap(_RandomAccessIterator, _RandomAccessIterator, _Compare&) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1672:23:   required from ‘void std::__heap_select(_RandomAccessIterator, _RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1933:25:   required from ‘void std::__partial_sort(_RandomAccessIterator, _RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1948:27:   required from ‘void std::__introsort_loop(_RandomAccessIterator, _RandomAccessIterator, _Size, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Size = long int; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1968:25:   required from ‘void std::__sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:4834:18:   required from ‘void std::sort(_RAIter, _RAIter) [with _RAIter = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+HoldEmGame.cpp:81:44:   required from here
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_heap.h:225:29: error: use of deleted function ‘HoldEmGame::playerStruct& HoldEmGame::playerStruct::operator=(HoldEmGame::playerStruct&&)’
+    *(__first + __holeIndex) = _GLIBCXX_MOVE(*(__first + __secondChild));
+                             ^
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_heap.h:231:29: error: use of deleted function ‘HoldEmGame::playerStruct& HoldEmGame::playerStruct::operator=(HoldEmGame::playerStruct&&)’
+    *(__first + __holeIndex) = _GLIBCXX_MOVE(*(__first
+                             ^
+In file included from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/char_traits.h:39,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ios:40,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/ostream:38,
+                 from /project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/iostream:39,
+                 from Game.h:8,
+                 from HoldEmGame.h:8,
+                 from HoldEmGame.cpp:7:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h: In instantiation of ‘static _BI2 std::__copy_move_backward<true, false, std::random_access_iterator_tag>::__copy_move_b(_BI1, _BI1, _BI2) [with _BI1 = HoldEmGame::playerStruct*; _BI2 = HoldEmGame::playerStruct*]’:
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:588:37:   required from ‘_BI2 std::__copy_move_backward_a(_BI1, _BI1, _BI2) [with bool _IsMove = true; _BI1 = HoldEmGame::playerStruct*; _BI2 = HoldEmGame::playerStruct*]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:598:5:   required from ‘_BI2 std::__copy_move_backward_a2(_BI1, _BI1, _BI2) [with bool _IsMove = true; _BI1 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _BI2 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:668:48:   required from ‘_BI2 std::move_backward(_BI1, _BI1, _BI2) [with _BI1 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _BI2 = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1851:8:   required from ‘void std::__insertion_sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1885:25:   required from ‘void std::__final_insertion_sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:1971:31:   required from ‘void std::__sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >; _Compare = __gnu_cxx::__ops::_Iter_less_iter]’
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algo.h:4834:18:   required from ‘void std::sort(_RAIter, _RAIter) [with _RAIter = __gnu_cxx::__normal_iterator<HoldEmGame::playerStruct*, std::vector<HoldEmGame::playerStruct> >]’
+HoldEmGame.cpp:81:44:   required from here
+/project/engineering/compilers/gcc-8.3.0/include/c++/8.3.0/bits/stl_algobase.h:548:18: error: use of deleted function ‘HoldEmGame::playerStruct& HoldEmGame::playerStruct::operator=(HoldEmGame::playerStruct&&)’
+      *--__result = std::move(*--__last);
+      ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+In file included from lab2.cpp:6:
+HoldEmGame.h:54:107: error: ‘bool HoldEmGame::operator<(const HoldEmGame::playerStruct&, const HoldEmGame::playerStruct&)’ must have exactly one argument
+         bool operator< (const HoldEmGame::playerStruct & player1, const HoldEmGame::playerStruct & player2);
+                                                                                                           ^
+make: *** [lab2] Error 1
