@@ -8,6 +8,13 @@
 
 using namespace std;
 
+
+vector<pair<string, int> > PinochleGame::points = {
+    {"dix",10}, {"offsuitmarriage",20},{"fortyjacks", 40}, {"pinochle", 40}, 
+    {"insuitmarriage",40}, {"sixtyqueens", 60}, {"eightykings", 80}, {"hundredaces", 100}, 
+    {"insuitrun", 150}, {"doublepinochle", 300}, {"fourhundredjacks", 400}, {"sixhundredqueens", 600}, 
+    {"eighthundredkings", 600}, {"thousandaces", 1000}, {"insuitdoublerun", 1500}
+};
 //PinochleGame constructor
 //  construct base class and initialize state
 PinochleGame::PinochleGame(int argc, const char * argv[]): Game(argc, argv) {
@@ -38,8 +45,15 @@ int PinochleGame::play() {
         for(int n=0; n < (int)names.size(); n++) {  //print out players' hands
             cout << names[n] << "'s hand is: ";
             pinochleHands[n].print(cout, PINOCHLE_PRINT);
+            vector<PinochleMelds> melds;
+            suit_independent_evaluation(pinochleHands[n], melds);
+            cout << names[n] << "'s Melds: ";
+            for(auto x: melds){
+                cout << x;
+            }
+            cout << '\n' << '\n';
         }
-        
+
         //collect players' hands back to deck
         for(int m=0; m < (int)pinochleHands.size(); m++) {
             pinochleDeck.collect(pinochleHands[m]);
@@ -56,17 +70,147 @@ int PinochleGame::play() {
 
 
 //define operator<< for PinochleGame
-ostream & PinochleGame::operator<< (ostream& os, const PinochleMelds & pm) {
-    auto it = Points[pm];
-    os << it.first << ": " << it.second << endl;
+ostream & operator<< (ostream& os, const PinochleMelds & pm) {
+    int _points = static_cast<int>(pm);
+    vector<pair<string, int> >::iterator it;
+    it= PinochleGame::points.begin();
+    advance(it, _points);
+    os << it->first << ": " << it->second << "  ";
     return os;
 }
 
 
 
-void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> playerHand, vector<PinochleMelds> & pms){
+void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> & playerHand, vector<PinochleMelds> & melds){
     CardSet<PinochleRank, Suit> copyHand(playerHand);
+    vector<Card<PinochleRank, Suit> > * cards = CardSet<PinochleRank, Suit>::getCards(copyHand);
 
+    
+    std::sort(cards->begin(), cards->end());
+
+    vector<vector<Card<PinochleRank, Suit> > > combinations = {
+        {
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::clubs), 
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::clubs),
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::diamonds), 
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::hearts), 
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::hearts),
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::spades), 
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::spades)
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::clubs),
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::hearts),
+        Card<PinochleRank, Suit>(PinochleRank::ace, Suit::spades)
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::clubs), 
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::clubs),
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::diamonds), 
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::hearts), 
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::hearts),
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::spades), 
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::spades)
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::clubs),
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::hearts),
+        Card<PinochleRank, Suit>(PinochleRank::king, Suit::spades)
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::clubs), 
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::clubs),
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::diamonds), 
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::hearts), 
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::hearts),
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::spades), 
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::spades)
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::clubs),
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::hearts),
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::spades)
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::clubs), 
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::clubs),
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::diamonds), 
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::hearts), 
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::hearts),
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::spades), 
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::spades)
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::clubs),
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::hearts),
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::spades)
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::diamonds), 
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::diamonds),
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::spades),
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::spades),
+        },
+        {
+        Card<PinochleRank, Suit>(PinochleRank::jack, Suit::diamonds), 
+        Card<PinochleRank, Suit>(PinochleRank::queen, Suit::spades),
+        }
+    };
+
+
+    for(int i = 0; i<(int)combinations.size();i++){
+        std::vector<Card<PinochleRank, Suit> > intersection;
+        std::set_intersection(combinations[i].begin(), combinations[i].end(), cards->begin(), cards->end(), std::back_inserter(intersection));
+
+        if(combinations[i]==intersection){
+            switch(i){
+                case 0:
+                    melds.push_back(PinochleMelds::thousandaces);
+                    break;
+                case 1:
+                    if(std::find(melds.begin(), melds.end(), PinochleMelds::thousandaces) != melds.end()) break;
+                    melds.push_back(PinochleMelds::hundredaces);
+                    break;
+                case 2:
+                    melds.push_back(PinochleMelds::eighthundredkings);
+                    break;
+                case 3:
+                    if(std::find(melds.begin(), melds.end(), PinochleMelds::eighthundredkings) != melds.end()) break;
+                    melds.push_back(PinochleMelds::eightykings);
+                    break;
+                case 4:
+                    melds.push_back(PinochleMelds::sixhundredqueens);
+                    break;
+                case 5:
+                    if(std::find(melds.begin(), melds.end(), PinochleMelds::sixhundredqueens) != melds.end()) break;
+                    melds.push_back(PinochleMelds::sixtyqueens);
+                    break;
+                case 6:
+                    melds.push_back(PinochleMelds::fourhundredjacks);
+                    break;
+                case 7:
+                    if(std::find(melds.begin(), melds.end(), PinochleMelds::fourhundredjacks) != melds.end()) break;
+                    melds.push_back(PinochleMelds::fortyjacks);
+                    break;
+                case 8:
+                    melds.push_back(PinochleMelds::doublepinochle);
+                    break;
+                case 9:
+                    if(std::find(melds.begin(), melds.end(), PinochleMelds::doublepinochle) != melds.end()) break;
+                    melds.push_back(PinochleMelds::pinochle);
+                    break;
+
+            }
+        }
+    }
     
 }
 

@@ -29,6 +29,11 @@ bool checkRank(const Card<R,S> & card_1, const Card<R,S> & card_2);
 template <typename R, typename S>
 bool checkSuit(const Card<R,S> & card_1, const Card<R,S> & card_2);
 
+template <typename R, typename S>
+bool operator< (const Card<R,S> & card_1, const Card<R,S> & card_2);
+
+template <typename R, typename S>
+bool operator== (const Card<R,S> & card_1, const Card<R,S> & card_2);
 
 //inclusion guard
 #ifdef TEMPLATE_HEADERS_INCLUDE_SOURCE

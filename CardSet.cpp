@@ -13,6 +13,7 @@ template<typename R, typename S>
 void CardSet<R, S>::print(ostream& os, size_t size) {
     //int i to track the number of cards printed
     int i = 0;
+    sort(cards.begin(), cards.end());
     for(typename vector< Card<R,S> >::iterator itr = cards.begin(); itr != cards.end(); ++itr) {
         //pass cards to ostream using iterator
         os << *itr << " ";
@@ -64,7 +65,7 @@ CardSet<R,S>::CardSet(const CardSet<R,S> & cardSet_cp){
 
 //getter member function
 template<typename R, typename S>
-vector<Card<R,S> > * getCards(CardSet<R,S> & cardSet){
-    return &cardSet.cards;
+vector<Card<R,S> > * CardSet<R,S>::getCards(CardSet<R,S> & cardSet){
+    vector<Card<R,S> > *tmp = &cardSet.cards;
+    return tmp;
 }
-

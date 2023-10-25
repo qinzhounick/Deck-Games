@@ -22,8 +22,18 @@ bool checkRank (const Card<R,S> & card_1, const Card<R,S> & card_2){
 }
 
 template <typename R, typename S>
-bool checkRank (const Card<R,S> & card_1, const Card<R,S> & card_2){
+bool checkSuit (const Card<R,S> & card_1, const Card<R,S> & card_2){
     if(card_1._suit < card_2._suit || (card_1._suit == card_2._suit && card_1._rank < card_2._rank)) return true;
     else return false;
+}
+
+template <typename R, typename S>
+bool operator< (const Card<R,S> & card_1, const Card<R,S> & card_2){
+    return checkRank(card_1, card_2);
+}
+
+template <typename R, typename S>
+bool operator== (const Card<R,S> & card_1, const Card<R,S> & card_2){
+    return (card_1._rank==card_2._rank && card_1._suit==card_2._suit);
 }
 
