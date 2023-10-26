@@ -63,6 +63,7 @@ int HoldEmGame::play() {
             cout << names[n] << "'s hand is: ";
             holdEmHands[n].print(cout, 2);
         }
+        cout << '\n';
 
         
         deal();  // deal cards for flop state
@@ -74,11 +75,20 @@ int HoldEmGame::play() {
             HoldEmGame::playerStruct tmp(holdEmHands[n], names[n], HoldEmHandRank::undefined); //
             playerS.push_back(tmp); //push back player struct
         }
-        for(auto x: playerS){  //loop through vector
-            board >> x._cardset;  //add cards from board to player cardset
+        for(HoldEmGame::playerStruct & x: playerS){  //loop through vector
+            auto boardCards = CardSet<HoldEmRank, Suit>::getCards(board);
+            auto playerCards = CardSet<HoldEmRank, Suit>::getCards(x._cardset);
+            playerCards->push_back(boardCards->at(0));
+            playerCards->push_back(boardCards->at(1));
+            playerCards->push_back(boardCards->at(2));
             x._rank = holdem_hand_evaluation(x._cardset);  //set player ranks
         }
-        sort(playerS.begin(), playerS.end()); //sort player by rank
+        std::sort(playerS.begin(), playerS.end()); //sort player by rank
+        for(int i=playerS.size()-1; i>=0; i--){  //loop through vector
+            cout << "Player " << playerS[i]._name << "'s hand: ";
+            playerS[i]._cardset.print(cout, 5);
+            cout << "Rank: " << playerS[i]._rank << '\n' << '\n';
+        }
 
         deal();  // deal cards for turn state
         cout << "BOARD(turn):";  //print board
@@ -220,7 +230,7 @@ HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit
 }
 
 //struct constructor
-HoldEmGame::playerStruct::playerStruct(CardSet<HoldEmRank, Suit> cardset, std::string & name, HoldEmHandRank rank)
+HoldEmGame::playerStruct::playerStruct(CardSet<HoldEmRank, Suit> cardset, std::string name, HoldEmHandRank rank)
     :_cardset(cardset), _name(name), _rank(rank){}
 
 //less than operator
@@ -416,7 +426,7 @@ bool pair_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldE
         }
     }
 
-    
+    if(player1Cards[player1_pair_index]._rank < player2Cards[player2_pair_index]._rank) return true;    
     vector<bool> sameCards{true, false, false, false};
     int i = player1Cards.size()-1;
     int j = player2Cards.size()-1;

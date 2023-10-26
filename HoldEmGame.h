@@ -46,9 +46,9 @@ class HoldEmGame: public Game {
         virtual int play();  //declare play function to play HoldEm game
         struct playerStruct{
             CardSet<HoldEmRank, Suit> _cardset;
-            std::string & _name;
+            std::string _name;
             HoldEmHandRank _rank;
-            playerStruct(CardSet<HoldEmRank, Suit> cardset, std::string & name, HoldEmHandRank rank);
+            playerStruct(CardSet<HoldEmRank, Suit> cardset, std::string name, HoldEmHandRank rank);
         };
     private:
         HoldEmHandRank holdem_hand_evaluation(const CardSet<HoldEmRank, Suit> & playerHand);
