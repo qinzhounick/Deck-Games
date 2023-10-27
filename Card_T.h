@@ -2,7 +2,7 @@
 //Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: header file for Card
-//  declare struct card and operator<<
+//  declare struct card, operator<<, checkRank, checkSuit, operator<, operator==
 
 #pragma once
 #include "Suit.h"

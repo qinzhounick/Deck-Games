@@ -2,7 +2,7 @@
 //Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: header file for HoldEmGame
-//  declared HoldEmState enum and HoldEmGame class 
+//  declared HoldEmState enum, HoldEmGame class, HoldEmHandRank enum class, and operator<<
 
 #pragma once
 #include "Game.h"

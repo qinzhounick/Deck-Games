@@ -8,7 +8,7 @@
 
 using namespace std;
 
-
+// a vector with all pinocle melds with their corresponding points
 vector<pair<string, int> > PinochleGame::points = {
     {"dix",10}, {"offsuitmarriage",20},{"fortyjacks", 40}, {"pinochle", 40}, 
     {"insuitmarriage",40}, {"sixtyqueens", 60}, {"eightykings", 80}, {"hundredaces", 100}, 
@@ -79,15 +79,14 @@ ostream & operator<< (ostream& os, const PinochleMelds & pm) {
     return os;
 }
 
-
-
+// suit_independent_evaluation function to check what combinations players' hands have
 void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> & playerHand, vector<PinochleMelds> & melds){
     CardSet<PinochleRank, Suit> copyHand(playerHand);
     vector<Card<PinochleRank, Suit> > * cards = CardSet<PinochleRank, Suit>::getCards(copyHand);
 
-    
-    std::sort(cards->begin(), cards->end());
+    std::sort(cards->begin(), cards->end()); // sort player's hand in ascending order
 
+    // a vector with all possible combinations
     vector<vector<Card<PinochleRank, Suit> > > combinations = {
         {
         Card<PinochleRank, Suit>(PinochleRank::ace, Suit::clubs), 
@@ -165,7 +164,8 @@ void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> 
         }
     };
 
-
+    // use intersection of sorted player's hand and the vector of possible combinations
+    // to check what melds player has and push them back to melds
     for(int i = 0; i<(int)combinations.size();i++){
         std::vector<Card<PinochleRank, Suit> > intersection;
         std::set_intersection(combinations[i].begin(), combinations[i].end(), cards->begin(), cards->end(), std::back_inserter(intersection));

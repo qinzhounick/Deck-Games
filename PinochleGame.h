@@ -2,7 +2,7 @@
 //Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: header file for PinochleGame
-//  declared PinochleGame class
+//  declared PinochleGame class, PinochleMelds enum class, and operator<<
 
 #pragma once
 #include "Game.h"

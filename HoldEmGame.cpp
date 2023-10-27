@@ -144,10 +144,12 @@ std::ostream & operator<< (std::ostream& os, const HoldEmHandRank & hhr) {
     return os;
 }
 
+// define holdem_hand_evaluation function to check what combinations players' hands have
 HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit> & playerHand){
     CardSet<HoldEmRank, Suit> copyHand(playerHand);
     vector<Card<HoldEmRank, Suit> > * cards = CardSet<HoldEmRank, Suit>::getCards(copyHand);
-    sort(cards->begin(), cards->end());
+    sort(cards->begin(), cards->end()); // sort the player's hand in ascending order
+    // copy the rank and suit of each card
     HoldEmRank r1, r2, r3, r4, r5;
     Suit s1, s2, s3, s4, s5;
     r1 = cards->at(0)._rank;
@@ -162,6 +164,7 @@ HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit
     s4 = cards->at(3)._suit;
     s5 = cards->at(4)._suit;
 
+    // check for each rank
     bool straight;
     if(r1==HoldEmRank::two && r5==HoldEmRank::ace){
         straight = (
@@ -204,8 +207,7 @@ HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit
         r1 == r2 || r2 == r3 || r3 == r4 || r4 == r5
     );
 
-
-
+    // return appropriate rank
     if(cards->size() != 5){
         return HoldEmHandRank::undefined;
     }else if(straightflush){

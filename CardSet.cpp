@@ -2,7 +2,8 @@
 //Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: source file for CardSet
-//  define print, operator>>, and is_empty function
+//  define print, operator>>, is_empty function, operator>>, 
+//  a copy constructor, a getter member function
 
 #include "CardSet.h"
 
