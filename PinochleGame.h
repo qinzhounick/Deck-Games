@@ -40,7 +40,7 @@ class PinochleGame: public Game{
     public:
         PinochleGame(int argc, const char * argv[]);  //declare constructor
         virtual int play();  //declare play function to play Pinochle game
-        static std::vector<std::pair<std::string, int> > points;
+        static std::vector<std::pair<std::string, int> > points;  //vector to store meld strings and points
 
 };
 

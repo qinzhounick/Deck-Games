@@ -3,41 +3,52 @@ Qinzhou(Nick) Song, Email: qinzhounick@wustl.edu
 Xinyu(Jack) Li, Email: l.xinyujack@wustl.edu
 
 2. Design Decisions:
-8) We added our own copy constructor because the default copy constructor performs shallow copy
+Q8) We added our own copy constructor because the default copy constructor performs shallow copy
 , while we want a deep copy constructor instead.
 
+Q12) We stored pairs of <string(meld_name), int(points)> into a vector for overloaded shift operator.
+Then, we stored all melds card combinations into a vector.(a vector of vectors of cards).
+Inside our PinochleGame evaluation function, we used std::set_intersection 
+  to check if player hand overlaps with any of the combinations.
+If one of combinations is found, we push back into the PinochleMeld vector.
+Finally, we print the melds and points from our melds vector in play function.
 
+Q15) For our HoldEmGame evaluation function, we brute-forced to check equalities between cards to find the rank
 
+Q16) For our HoldEmGame operator<, we first returned if rank a < rank b.
+If ranks are equal, we used if statement to check what rank they are.
+Then, we wrote helper functions for each rank to check if less than 
 
 
 2. Errors: 
-a) We had an error where our play() function in Game was undefined to the compiler.
-     We solved this problem by adding Game.h in our Makefile
+We only had two errors throughout the entire lab, because we thought through our methods clearly, then started programming.
+a) We had an undefined reference for our less than operator when we tried to sort cards in CardSet
+We realized that we did not have an overloaded less than operator for Card class, so we added one.
+Problem was solved.
+
+b) Our playerStruct inside HoldEmGame class had an error message of "...default definition would be ill-formed".
+We asked Prof. Gill and found that because we were declaring a std::string reference inside our struct inside the HoldEmGame
+, which is not allowed by the compiler. We solved this by making the variable just std::string instead of std::string &.
 
 3. Incorrect output:
-a) Our first output was printing cardset is empty nonstop instead of players' hands or the board. 
-     It was because in our CardSet operator, we checked if the CardSet passed in was empty.
-     When the operator is called in deal() for the first time, for example, pinochleDeck >> pinochleHands[j];
-     pinochleHands had empty hands, so c.empty is true and we are stuck in an infinite loop.
+a) For the less than operator of HoldEmGame, we did not check the same rank of one pairs to see if which pair is bigger.
+So our output had 4S 4D bigger than 9C 9D.
 
-Code:
-template<typename R, typename S>
-CardSet<R,S> & CardSet<R,S>::operator>> (CardSet<R,S> & c) {
-    try {
-        if(c.empty()) { //check if cards is empty
-            throw std::runtime_error("runtime_error"); //throw error
-        } else {
-            //if not empty, push back last card to another CardSet
-            //  and pop the last card
-            size_t t = cards.size();
-            c.cards.push_back(Card<R, S>(cards[t-1]._rank, cards[t-1]._suit));
-            cards.pop_back();
-        }
-    } catch(std::runtime_error const&) {
-        cout << "cardset is empty: " << endl; //print error message
-    }
-    return *this; 
-}
+b) For our PinochleGame output, we kept getting random melds for different hands. It was because that we were using an 
+    unordered_map to store our <meld_name,int> pair and unordered_map has random access. That's why it was giving us random
+    melds. We solved this by storing the pair inside a vector, so we can index into the vector to find the right meld.
+
+c) We had wrong output for one pair ranks:
+Player 1's hand: 2S 5C 5S 6D 7C 
+Rank: one pair
+
+Player 2's hand: 2S 5D 6D 6S 7C 
+Rank: one pair
+
+This was because inside our one pair helper function for less than operator
+, we only checked if hand a is less than hand b, and return true. 
+But we forgot to check if hand b is less than hand a, and return false.
+We added that and it solved problem.
 
 5. Correct output:
 HoldEm: supposed to print each player's hand(two cards) and print board for three turns(3 for flop, 4 for turn, 5 for river),

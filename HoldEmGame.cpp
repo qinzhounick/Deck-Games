@@ -442,8 +442,12 @@ bool pair_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldE
     }
 
     // compare the one pair rank of two players
-    if(player1Cards[player1_pair_index]._rank < player2Cards[player2_pair_index]._rank) return true; 
-
+    if(player1Cards[player1_pair_index]._rank < player2Cards[player2_pair_index]._rank){
+        return true; 
+    }else if(player1Cards[player1_pair_index]._rank > player2Cards[player2_pair_index]._rank){
+        return false;
+    }
+ 
     // going in order to compare thr rest three single cards  
     vector<bool> sameCards{true, false, false, false};
     // checking from the last card to the first card in players' hands

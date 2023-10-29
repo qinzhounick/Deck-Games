@@ -45,10 +45,10 @@ int PinochleGame::play() {
         for(int n=0; n < (int)names.size(); n++) {  //print out players' hands
             cout << names[n] << "'s hand is: ";
             pinochleHands[n].print(cout, PINOCHLE_PRINT);
-            vector<PinochleMelds> melds;
-            suit_independent_evaluation(pinochleHands[n], melds);
-            cout << names[n] << "'s Melds: ";
-            for(auto x: melds){
+            vector<PinochleMelds> melds;    //declare vector to store player melds
+            suit_independent_evaluation(pinochleHands[n], melds);  //evaluate players hands to assign melds
+            cout << names[n] << "'s Melds: ";   //print player name
+            for(auto x: melds){     //print player melds
                 cout << x;
             }
             cout << '\n' << '\n';
@@ -71,18 +71,18 @@ int PinochleGame::play() {
 
 //define operator<< for PinochleGame
 ostream & operator<< (ostream& os, const PinochleMelds & pm) {
-    int _points = static_cast<int>(pm);
-    vector<pair<string, int> >::iterator it;
-    it= PinochleGame::points.begin();
-    advance(it, _points);
-    os << it->first << ": " << it->second << "  ";
+    int _points = static_cast<int>(pm);     //convert enum class to int
+    vector<pair<string, int> >::iterator it;//declare iterator
+    it= PinochleGame::points.begin();       //assign iterator to the beginning of our points vector
+    advance(it, _points);                   //find the PinochleMelds inside the vector
+    os << it->first << ": " << it->second << "  ";  //print the meld and points
     return os;
 }
 
 // suit_independent_evaluation function to check what combinations players' hands have
 void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> & playerHand, vector<PinochleMelds> & melds){
-    CardSet<PinochleRank, Suit> copyHand(playerHand);
-    vector<Card<PinochleRank, Suit> > * cards = CardSet<PinochleRank, Suit>::getCards(copyHand);
+    CardSet<PinochleRank, Suit> copyHand(playerHand);   //copy playerHand cardset
+    vector<Card<PinochleRank, Suit> > * cards = CardSet<PinochleRank, Suit>::getCards(copyHand); //get player cards
 
     std::sort(cards->begin(), cards->end()); // sort player's hand in ascending order
 
@@ -167,11 +167,13 @@ void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> 
     // use intersection of sorted player's hand and the vector of possible combinations
     // to check what melds player has and push them back to melds
     for(int i = 0; i<(int)combinations.size();i++){
-        std::vector<Card<PinochleRank, Suit> > intersection;
+        std::vector<Card<PinochleRank, Suit> > intersection;    //declare a vector for intersection
+        //find the intersections between all combinations and player hands
         std::set_intersection(combinations[i].begin(), combinations[i].end(), cards->begin(), cards->end(), std::back_inserter(intersection));
 
+        //if one of the combination is found in player hand
         if(combinations[i]==intersection){
-            switch(i){
+            switch(i){  //use index to check which meld is found, push the meld into vector melds
                 case 0:
                     melds.push_back(PinochleMelds::thousandaces);
                     break;
