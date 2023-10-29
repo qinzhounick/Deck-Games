@@ -28,12 +28,17 @@ int main(int argc, const char *argv[]) {
     //Const int
     const int INVALID_INPUT = 1;
     const int FAIL_TO_CREATE = 2;
+    const int NO_GAME_NAME = 3;
     const int PINOCHLE_ARGC = 6;
     const int HOLDEM_MAX_ARGC = 11;
     const int HOLDEM_MIN_ARGC = 4;
 
     shared_ptr<Game> p;
 
+    if(argc==1){
+        cout << "Please provide the game name you wanna play." << endl;
+        return NO_GAME_NAME;
+    }
     string gameName = argv[GAME_NAME];
 
     //check for game type
@@ -45,7 +50,13 @@ int main(int argc, const char *argv[]) {
             cout << "Failed to create game." << endl;  //print error message if null pointer
             return FAIL_TO_CREATE;
         }
-    } else {
+    }else if(gameName == "Pinochle" && argc != PINOCHLE_ARGC){
+        cout << "Pinochle game takes four players. Please try again." << endl;
+        return INVALID_INPUT;
+    }else if(gameName == "HoldEm" && (argc > HOLDEM_MAX_ARGC || argc < HOLDEM_MIN_ARGC)){
+        cout << "HoldEm game takes 4-11 players. Please try again." << endl;
+        return INVALID_INPUT;
+    }else {
         //print error message for usage
         cout << "Invalid command, please follow the format: <excutable> <gamename> <player1> <player2> ..." << endl;
         return INVALID_INPUT;

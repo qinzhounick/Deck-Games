@@ -203,6 +203,8 @@ HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit
         (r1 == r2 && r3 == r4) || (r1 == r2 && r4 == r5) ||
         (r2 == r3 && r4 == r5)
     );
+
+    //check for pair
     bool pair = (
         r1 == r2 || r2 == r3 || r3 == r4 || r4 == r5
     );
