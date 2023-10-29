@@ -23,15 +23,19 @@ struct Card {
 template <typename R, typename S>
 std::ostream & operator<< (std::ostream& os, const Card<R,S>& card);
 
+//template checkRank function for struct card
 template <typename R, typename S>
 bool checkRank(const Card<R,S> & card_1, const Card<R,S> & card_2);
 
+//template checkSuit function for struct card
 template <typename R, typename S>
 bool checkSuit(const Card<R,S> & card_1, const Card<R,S> & card_2);
 
+//template less than operator for struct card
 template <typename R, typename S>
 bool operator< (const Card<R,S> & card_1, const Card<R,S> & card_2);
 
+//template equality operator function for struct card
 template <typename R, typename S>
 bool operator== (const Card<R,S> & card_1, const Card<R,S> & card_2);
 

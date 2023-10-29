@@ -50,11 +50,12 @@ int main(int argc, const char *argv[]) {
             cout << "Failed to create game." << endl;  //print error message if null pointer
             return FAIL_TO_CREATE;
         }
+    // If the game name is correct, check for the player input
     }else if(gameName == "Pinochle" && argc != PINOCHLE_ARGC){
-        cout << "Pinochle game takes four players. Please try again." << endl;
+        cout << "Invalid players! Pinochle game takes four players. Please try again." << endl;
         return INVALID_INPUT;
     }else if(gameName == "HoldEm" && (argc > HOLDEM_MAX_ARGC || argc < HOLDEM_MIN_ARGC)){
-        cout << "HoldEm game takes 4-11 players. Please try again." << endl;
+        cout << "Invalid players! HoldEm game takes 4-11 players. Please try again." << endl;
         return INVALID_INPUT;
     }else {
         //print error message for usage

@@ -164,8 +164,9 @@ HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit
     s4 = cards->at(3)._suit;
     s5 = cards->at(4)._suit;
 
-    // check for each rank
+    // check for straight
     bool straight;
+    // speical case when ace is the smallest but it is in the last position in the hand
     if(r1==HoldEmRank::two && r5==HoldEmRank::ace){
         straight = (
             r2 == ++r1 &&
@@ -180,25 +181,31 @@ HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit
             r5 == ++r1
         );
     }
+    // check for flush
     bool flush = (
         s1 == s2 && s2 == s3 && s3 == s4 && s4 == s5
     );
+    // check for straightflush
     bool straightflush = (straight && flush);
 
     r1 = cards->at(0)._rank; //reset r1
 
+    // check for fourofakind
     bool fourofakind = (
         (r1 == r2 && r2 == r3 && r3 == r4) || (r2 == r3 && r3 == r4 && r4 == r5)
     );
 
+    // check for fullhouse
     bool fullhouse = (
         (r1 == r2 && r2 == r3 && r4 == r5) || (r1 == r2 && r3 == r4 && r4 == r5)
     );
 
+    // check for threeofakind
     bool threeofakind = (
         (r1 == r2 && r2 == r3) || (r2 == r3 && r3 == r4) || (r3 == r4 && r4 == r5)
     );
 
+    // check for twopair
     bool twopair = (
         (r1 == r2 && r3 == r4) || (r1 == r2 && r4 == r5) ||
         (r2 == r3 && r4 == r5)
@@ -249,6 +256,7 @@ bool operator< (const HoldEmGame::playerStruct & player1, const HoldEmGame::play
     sort(cards1->begin(), cards1->end());
     sort(cards2->begin(), cards2->end());
 
+    // call corresponding helper functions regarding the rank
     if(player1._rank == player2._rank){
         if(player1._rank == HoldEmHandRank::pair){
             return pair_helper(*cards1, *cards2);
@@ -309,11 +317,14 @@ bool fourofakind_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Car
 
 //helper function for flush or xhigh rank
 bool flushOrXhigh_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldEmRank, Suit> > player2Cards){
+    // boolean vector showing the comparison result of the card at the same location in two players' hands
     vector<bool> sameCards{true, false, false, false, false, false};
+    // going from the last card to the first card
     int i = player1Cards.size()-1;
     int j = player2Cards.size()-1;
-    int k = 1;
+    int k = 1; // index for the boolean vector
 
+    // compare each card's rank
     while(i>=0 && j>=0){
         if(player1Cards[i]._rank == player2Cards[j]._rank){
             sameCards[k] = true;
@@ -430,32 +441,40 @@ bool pair_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldE
         }
     }
 
-    if(player1Cards[player1_pair_index]._rank < player2Cards[player2_pair_index]._rank) return true;    
+    // compare the one pair rank of two players
+    if(player1Cards[player1_pair_index]._rank < player2Cards[player2_pair_index]._rank) return true; 
+
+    // going in order to compare thr rest three single cards  
     vector<bool> sameCards{true, false, false, false};
-    int i = player1Cards.size()-1;
+    // checking from the last card to the first card in players' hands
+    int i = player1Cards.size()-1; 
     int j = player2Cards.size()-1;
     int k = 1;
-
     while(i>=0 && j>=0){
+        // skip the pair
         if(i==player1_pair_index){
             i -= 2;
             if(i<0) break;
         }
-
+        // skip the pair
         if(j==player2_pair_index){
             j -= 2;
             if(j<0) break;
         }
-
+        // if two single cards at the same location in two players' hands have the same rank, 
+        // give true to the location in the vector as a method to skip it in the future
         if(player1Cards[i]._rank == player2Cards[j]._rank){
             sameCards[k] = true;
+        // find the single card that determine which player wins over the other
         }else if(player1Cards[i]._rank < player2Cards[j]._rank && sameCards[k-1]){
             return true;
         }
 
-
+        // after each check, going back one location in the players' hands
         i--;
         j--;
+        // aftere each check, going to the next location in the boolean vector,
+        // representing the result of each comparison
         k++;
     }
 
