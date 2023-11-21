@@ -7,8 +7,7 @@
 
 #pragma once
 #include "Deck.h"
-#include "Card_T.h"
-
+#include "Suit.h"
 
 //declare enum for PinochleRank
 enum class PinochleRank {

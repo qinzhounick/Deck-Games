@@ -82,9 +82,11 @@ ostream & operator<< (ostream& os, const PinochleMelds & pm) {
 // suit_independent_evaluation function to check what combinations players' hands have
 void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> & playerHand, vector<PinochleMelds> & melds){
     CardSet<PinochleRank, Suit> copyHand(playerHand);   //copy playerHand cardset
-    vector<Card<PinochleRank, Suit> > * cards = CardSet<PinochleRank, Suit>::getCards(copyHand); //get player cards
+    //vector<Card<PinochleRank, Suit> > * cards = CardSet<PinochleRank, Suit>::getCards(copyHand); //get player cards
 
-    std::sort(cards->begin(), cards->end()); // sort player's hand in ascending order
+    auto copyHand_begin = copyHand.begin();
+    auto copyHand_end = copyHand.end();
+    std::sort(copyHand_begin, copyHand_end); // sort player's hand in ascending order
 
     // a vector with all possible combinations
     vector<vector<Card<PinochleRank, Suit> > > combinations = {
@@ -169,7 +171,7 @@ void PinochleGame::suit_independent_evaluation(const CardSet<PinochleRank,Suit> 
     for(int i = 0; i<(int)combinations.size();i++){
         std::vector<Card<PinochleRank, Suit> > intersection;    //declare a vector for intersection
         //find the intersections between all combinations and player hands
-        std::set_intersection(combinations[i].begin(), combinations[i].end(), cards->begin(), cards->end(), std::back_inserter(intersection));
+        std::set_intersection(combinations[i].begin(), combinations[i].end(), copyHand_begin, copyHand_end, std::back_inserter(intersection));
 
         //if one of the combination is found in player hand
         if(combinations[i]==intersection){

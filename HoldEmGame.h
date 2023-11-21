@@ -7,7 +7,6 @@
 #pragma once
 #include "Game.h"
 #include "HoldEmDeck.h"
-#include "CardSet.h"
 
 
 enum class HoldEmHandRank{

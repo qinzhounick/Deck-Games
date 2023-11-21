@@ -75,12 +75,12 @@ int HoldEmGame::play() {
             HoldEmGame::playerStruct tmp(holdEmHands[n], names[n], HoldEmHandRank::undefined); //
             playerS.push_back(tmp); //push back player struct
         }
+        cout << "before the for loop point" << endl;
         for(HoldEmGame::playerStruct & x: playerS){  //loop through vector
-            auto boardCards = CardSet<HoldEmRank, Suit>::getCards(board);
-            auto playerCards = CardSet<HoldEmRank, Suit>::getCards(x._cardset);
-            playerCards->push_back(boardCards->at(0));
-            playerCards->push_back(boardCards->at(1));
-            playerCards->push_back(boardCards->at(2));
+            auto boardCards= board.begin();
+            x._cardset.add_card(*boardCards++);
+            x._cardset.add_card(*boardCards++);
+            x._cardset.add_card(*boardCards);
             x._rank = holdem_hand_evaluation(x._cardset);  //set player ranks
         }
         std::sort(playerS.begin(), playerS.end()); //sort player by rank
@@ -147,22 +147,25 @@ std::ostream & operator<< (std::ostream& os, const HoldEmHandRank & hhr) {
 // define holdem_hand_evaluation function to check what combinations players' hands have
 HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit> & playerHand){
     CardSet<HoldEmRank, Suit> copyHand(playerHand);
-    vector<Card<HoldEmRank, Suit> > * cards = CardSet<HoldEmRank, Suit>::getCards(copyHand);
-    sort(cards->begin(), cards->end()); // sort the player's hand in ascending order
+    //vector<Card<HoldEmRank, Suit> > * cards = CardSet<HoldEmRank, Suit>::getCards(copyHand);
+    vector<Card<HoldEmRank, Suit> > cards;
+    //std::copy(copyHand.begin(), copyHand.end(), cards.begin()); //copy the cards into the empty vector
+    auto itr1 = copyHand.begin();
+    cards.push_back(*itr1++);
+    cards.push_back(*itr1++);
+    cards.push_back(*itr1++);
+    cards.push_back(*itr1++);
+    cards.push_back(*itr1);
+    sort(copyHand.begin(), copyHand.end()); // sort the player's hand in ascending order
     // copy the rank and suit of each card
     HoldEmRank r1, r2, r3, r4, r5;
     Suit s1, s2, s3, s4, s5;
-    r1 = cards->at(0)._rank;
-    r2 = cards->at(1)._rank;
-    r3 = cards->at(2)._rank;
-    r4 = cards->at(3)._rank;
-    r5 = cards->at(4)._rank;
-
-    s1 = cards->at(0)._suit;
-    s2 = cards->at(1)._suit;
-    s3 = cards->at(2)._suit;
-    s4 = cards->at(3)._suit;
-    s5 = cards->at(4)._suit;
+    auto it = copyHand.begin();
+    r1 = it->_rank; s1 = it->_suit; it++; //get the cards' rank and suit by value
+    r2 = it->_rank; s2 = it->_suit; it++;
+    r3 = it->_rank; s3 = it->_suit; it++;
+    r4 = it->_rank; s4 = it->_suit; it++;
+    r5 = it->_rank; s5 = it->_suit;
 
     // check for straight
     bool straight;
@@ -188,7 +191,8 @@ HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit
     // check for straightflush
     bool straightflush = (straight && flush);
 
-    r1 = cards->at(0)._rank; //reset r1
+    auto itr = copyHand.begin();
+    r1 = itr->_rank; //reset r1
 
     // check for fourofakind
     bool fourofakind = (
@@ -217,7 +221,7 @@ HoldEmHandRank HoldEmGame::holdem_hand_evaluation(const CardSet<HoldEmRank, Suit
     );
 
     // return appropriate rank
-    if(cards->size() != 5){
+    if(cards.size() != 5){
         return HoldEmHandRank::undefined;
     }else if(straightflush){
         return HoldEmHandRank::straightflush;
@@ -251,33 +255,52 @@ bool operator< (const HoldEmGame::playerStruct & player1, const HoldEmGame::play
     //get players' hands and sort them
     CardSet<HoldEmRank, Suit> copyHand1(player1._cardset);
     CardSet<HoldEmRank, Suit> copyHand2(player2._cardset);
-    auto cards1 = CardSet<HoldEmRank, Suit>::getCards(copyHand1);
-    auto cards2 = CardSet<HoldEmRank, Suit>::getCards(copyHand2);
-    sort(cards1->begin(), cards1->end());
-    sort(cards2->begin(), cards2->end());
 
+    //create empty vectors of cards to store the hands
+    vector<Card<HoldEmRank, Suit> > cards1;
+    vector<Card<HoldEmRank, Suit> > cards2;
+
+    auto itr1 = copyHand1.begin();
+    cards1.push_back(*itr1++);
+    cards1.push_back(*itr1++);
+    cards1.push_back(*itr1++); 
+    cards1.push_back(*itr1++);
+    cards1.push_back(*itr1);
+
+    auto itr2 = copyHand2.begin();
+    cards2.push_back(*itr2++);
+    cards2.push_back(*itr2++);
+    cards2.push_back(*itr2++); 
+    cards2.push_back(*itr2++);
+    cards2.push_back(*itr2);
+
+    //sort the cards of player1 and player2
+    sort(cards1.begin(), cards1.end());
+    sort(cards2.begin(), cards2.end());
+
+    
     // call corresponding helper functions regarding the rank
     if(player1._rank == player2._rank){
         if(player1._rank == HoldEmHandRank::pair){
-            return pair_helper(*cards1, *cards2);
+            return pair_helper(cards1, cards2);
         }
         if(player1._rank == HoldEmHandRank::twopair){
-            return twopair_helper(*cards1, *cards2);
+            return twopair_helper(cards1, cards2);
         }
         if(player1._rank == HoldEmHandRank::threeofakind || player1._rank == HoldEmHandRank::fullhouse){
-            return threeofakindOrFullhouse_helper(*cards1, *cards2);
+            return threeofakindOrFullhouse_helper(cards1, cards2);
         }
         if(player1._rank == HoldEmHandRank::straight){
-            return straight_helper(*cards1, *cards2);
+            return straight_helper(cards1, cards2);
         }
         if(player1._rank == HoldEmHandRank::flush || player1._rank == HoldEmHandRank::xhigh){
-            return flushOrXhigh_helper(*cards1, *cards2);
+            return flushOrXhigh_helper(cards1, cards2);
         }
         if(player1._rank == HoldEmHandRank::fourofakind){
-            return fourofakind_helper(*cards1, *cards2);
+            return fourofakind_helper(cards1, cards2);
         }
         if(player1._rank == HoldEmHandRank::straightflush){
-            return straightflush_helper(*cards1, *cards2);
+            return straightflush_helper(cards1, cards2);
         }
     }
 

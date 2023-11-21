@@ -7,8 +7,6 @@
 
 #pragma once
 #include "CardSet.h"
-#include <random>
-#include <algorithm>
 
 
 //derived class deck
@@ -16,7 +14,7 @@ template<typename R, typename S>
 class Deck: public CardSet<R, S> {
     public:
         void shuffle(); //shuffle the cards in deck
-        void collect(CardSet<R, S> & col); //collect cards from CardSet back to deck
+
 };
 
 

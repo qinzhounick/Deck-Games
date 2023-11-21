@@ -23,10 +23,29 @@ class CardSet {
         bool is_empty();
         //Defualt constructor
         CardSet() = default;
+        //Constructor that takes a vector of cards
+        CardSet(std::vector<Card<R, S> > &&vec);
         //copy constructor
         CardSet(const CardSet<R,S> & cardSet_cp);
-        static std::vector<Card<R,S> > * getCards(CardSet<R,S> & cardSet); 
+        // add cards function
+        void add_card(Card<R,S> & card);
+        // two different non-static accessor methods
+        //static std::vector<Card<R,S> > * getCards(CardSet<R,S> & cardSet); 
+        typename std::vector<Card<R,S> >::iterator begin(); //begin function
+        typename std::vector<Card<R,S> >::iterator end(); //end function
 
+        typedef Card<R, S> card_type;
+        typedef typename vector<Card<R, S>>::iterator iter;
+        typedef R rank_type;
+        typedef S suit_type;
+
+        void clear(); // clear the cards
+        void erase(iter begin, iter end);
+        void collect(CardSet<R, S> & col); //collect cards from CardSet back to deck
+        
+        void collect_if(CardSet<R, S> deck, std::function<bool(Card<R,S>&)> pred);
+        bool request(CardSet<R, S> & cardset, R & rank);
+        
 };
 
 //inclusion guard

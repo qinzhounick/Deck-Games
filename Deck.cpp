@@ -17,15 +17,3 @@ void Deck<rank, suit>::shuffle() {
 
     std::shuffle(CardSet<rank,suit>::cards.begin(), CardSet<rank,suit>::cards.end(), g);
 }
-
-//define collect function
-template<typename rank, typename suit>
-void Deck<rank, suit>::collect(CardSet<rank, suit> & col) {
-    if(col.is_empty()) { //check if the Card passed in is empty
-        throw std::runtime_error("runtime error"); //throw runtime error if empty
-    } else {
-        while(!col.is_empty()){ //else pass all the cards into deck
-            col >> *this;
-        }
-    }
-}

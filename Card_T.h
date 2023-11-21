@@ -5,7 +5,13 @@
 //  declare struct card, operator<<, checkRank, checkSuit, operator<, operator==
 
 #pragma once
-#include "Suit.h"
+#include <ostream>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <functional>
+#include <random>
+#include <algorithm>
 
 //declaration of template struct Card
 template <typename R, typename S>

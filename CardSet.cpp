@@ -58,15 +58,88 @@ CardSet<R,S> & CardSet<R,S>::operator>> (CardSet<R,S> & c) {
     
 }
 
-//copy constructor
+//constructor that takes a vector of cards
+template<typename R, typename S>
+CardSet<R,S>::CardSet(std::vector<Card<R, S> > &&vec) : cards(std::move(vec)){}
+//copy constructor 
 template<typename R, typename S>
 CardSet<R,S>::CardSet(const CardSet<R,S> & cardSet_cp){
     cards = cardSet_cp.cards;
 }
 
+// //copy constructor 2
+// template<typename R, typename S>
+// CardSet<R,S>::CardSet(const vector<Card<R,S> > & card_cp){
+//     cards = card_cp;
+// }
+
+/*
 //getter member function
 template<typename R, typename S>
 vector<Card<R,S> > * CardSet<R,S>::getCards(CardSet<R,S> & cardSet){
     vector<Card<R,S> > *tmp = &cardSet.cards;
     return tmp;
+}
+*/
+
+//begin function returns an iterator that points to cards.begin()
+template<typename R, typename S>
+typename vector<Card<R,S> >::iterator CardSet<R,S>::begin() {
+    return cards.begin();
+}
+
+//end function returns an iterator that points to cards.end()
+template<typename R, typename S>
+typename vector<Card<R,S> >::iterator CardSet<R,S>::end() {
+    return cards.end();
+}
+
+template<typename R, typename S>
+void CardSet<R,S>::add_card(Card<R,S> & card){
+    cards.push_back(card);
+}
+
+template<typename R, typename S>
+void CardSet<R,S>::clear() {
+    cards.clear();
+}
+
+template<typename R, typename S>
+void CardSet<R,S>::erase(iter begin, iter end) {
+    cards.erase(begin, end);
+}
+
+//define collect function
+template<typename R, typename S>
+void CardSet<R, S>::collect(CardSet<R, S> & col) {
+    if(col.is_empty()) { //check if the Card passed in is empty
+        throw std::runtime_error("runtime error"); //throw runtime error if empty
+    } else {
+        auto it = col.end();
+        std::move(col.begin(), it, std::back_inserter(cards));  // ##
+        col.clear();
+    }
+}
+
+template<typename R, typename S>
+void collect_if(CardSet<R,S> deck, std::function<bool(Card<R,S>&)> pred) {
+    std::copy_if(deck.begin(), deck.end(),
+                 pred);
+    deck.erase(std::remove_if(deck.begin(), 
+                              deck.end(),
+                              pred),
+               deck.end());
+}
+
+template<typename R, typename S>
+bool CardSet<R,S>::request(CardSet<R, S> & cardset, R & rank) {
+    auto iter = std::find(cardset.begin(), cardset.end(), [&rank](const Card<R,S> & card) { return card._rank == rank;});
+
+    if (iter == cardset.end()) {
+        return false;
+    }
+
+    cards.push_back(std::move(*iter)); // Move the card to this CardSet
+    cardset.erase(iter);
+    return true;
 }

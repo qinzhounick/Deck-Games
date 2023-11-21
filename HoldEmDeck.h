@@ -7,7 +7,7 @@
 
 #pragma once
 #include "Deck.h"
-#include "Card_T.h"
+#include "Suit.h"
 
 //const int variable to avoid magic number
 const int FLOP_PRINT = 3;  //flop print size

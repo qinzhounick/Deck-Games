@@ -7,7 +7,6 @@
 #pragma once
 #include "Game.h"
 #include "PinochleDeck.h"
-#include "CardSet.h"
 
 enum class PinochleMelds{
     dix, 
