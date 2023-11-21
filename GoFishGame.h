@@ -8,11 +8,13 @@
 #include "Game.h"
 #include "Suit.h"
 #include "HoldEmDeck.h"
+#include "PinochleDeck.h"
+#include "UnoDeck.h"
 
-template <typename s=Suit, typename r=HoldEmRank, typename d=HoldEmDeck>
+template <typename s, typename r, typename d>
 class GoFishGame: public Game{
     public:
-        GoFishGame(int argc, char * argv);
+        GoFishGame(int argc, char * argv){};
         virtual ~GoFishGame();
         virtual int play();  //declare play function to play Pinochle game
     protected:
@@ -22,29 +24,43 @@ class GoFishGame: public Game{
         virtual void deal();
 };
 
-template <typename s=Suit, typename r=PinochleRank, typename d=HoldEmDeck>
-class GoFishGame: public Game{
+
+template <>
+class GoFishGame<Suit, HoldEmRank, HoldEmDeck>: public Game{
     public:
         GoFishGame(int argc, char * argv);
         virtual ~GoFishGame();
         virtual int play();  //declare play function to play Pinochle game
     protected:
-        d goFishDeck;
-        std::vector< CardSet<r, s> > goFishHands;
-        std::vector< CardSet<r, s> > goFishBooks;
+        HoldEmDeck goFishDeck;
+        std::vector< CardSet<HoldEmRank, Suit> > goFishHands;
+        std::vector< CardSet<HoldEmRank, Suit> > goFishBooks;
         virtual void deal();
 };
 
-template <typename s=Suit, typename r=UnoRank, typename d=HoldEmDeck>
-class GoFishGame: public Game{
+template <>
+class GoFishGame<Suit, PinochleRank, HoldEmDeck>: public Game{
     public:
         GoFishGame(int argc, char * argv);
         virtual ~GoFishGame();
         virtual int play();  //declare play function to play Pinochle game
     protected:
-        d goFishDeck;
-        std::vector< CardSet<r, s> > goFishHands;
-        std::vector< CardSet<r, s> > goFishBooks;
+        HoldEmDeck goFishDeck;
+        std::vector< CardSet<PinochleRank, Suit> > goFishHands;
+        std::vector< CardSet<PinochleRank, Suit> > goFishBooks;
+        virtual void deal();
+};
+
+template <>
+class GoFishGame<Suit, UnoRank, HoldEmDeck>: public Game{
+    public:
+        GoFishGame(int argc, char * argv);
+        virtual ~GoFishGame();
+        virtual int play();  //declare play function to play Pinochle game
+    protected:
+        HoldEmDeck goFishDeck;
+        std::vector< CardSet<UnoRank, Suit> > goFishHands;
+        std::vector< CardSet<UnoRank, Suit> > goFishBooks;
         virtual void deal();
 };
 

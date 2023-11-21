@@ -4,10 +4,10 @@ EXECUTABLE	= lab3
 #		Source (.cpp) files you want to compile
 #		(NOTE: Don't include header (.h) files, or any source (.cpp) files
 #		that only contain template class method definitions.)
-CMPL_SRCS	= Suit.cpp UnoColor.cpp UnoDeck.cpp PinochleDeck.cpp HoldEmDeck.cpp Game.cpp PinochleGame.cpp HoldEmGame.cpp GoFishGame.cpp lab3.cpp
+CMPL_SRCS	= Suit.cpp UnoColor.cpp UnoDeck.cpp PinochleDeck.cpp HoldEmDeck.cpp Game.cpp PinochleGame.cpp HoldEmGame.cpp lab3.cpp
 
 #               Source files containing only template class method definitions
-TMPL_SRCS	= Card_T.cpp CardSet.cpp Deck.cpp
+TMPL_SRCS	= Card_T.cpp CardSet.cpp Deck.cpp GoFishGame.cpp
 
 #               Header (.h) files
 HEADER_FILES    = Suit.h Card_T.h CardSet.h Deck.h UnoColor.h UnoDeck.h PinochleDeck.h HoldEmDeck.h Game.h PinochleGame.h HoldEmGame.h GoFishGame.h
