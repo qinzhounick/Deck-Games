@@ -123,12 +123,8 @@ void CardSet<R, S>::collect(CardSet<R, S> & col) {
 
 template<typename R, typename S>
 void collect_if(CardSet<R,S> deck, std::function<bool(Card<R,S>&)> pred) {
-    std::copy_if(deck.begin(), deck.end(),
-                 pred);
-    deck.erase(std::remove_if(deck.begin(), 
-                              deck.end(),
-                              pred),
-               deck.end());
+    std::copy_if(deck.begin(), deck.end(), std::back_inserter(CardSet<R,S>::begin()), pred);
+    deck.erase(std::remove_if(deck.begin(), deck.end(), pred), deck.end());
 }
 
 template<typename R, typename S>
