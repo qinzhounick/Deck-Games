@@ -39,10 +39,11 @@ const int GOFISH_PRINT = 7;
 template <typename s, typename r, typename d>
 bool GoFishGame<s,r,d>::turn(int playerNumber){
     bool incorrect_input = true;
-    string input_rank, input_player;
-    cout << "Player " << names[n] << "'s hand is: ";
+    string input_rank;
+    int input_player;
+    cout << "Player " << names[playerNumber] << "'s hand is: ";
     goFishHands[playerNumber].print(std::cout, GOFISH_PRINT);
-    cout << "Player " << names[n] << "'s books are: ";
+    cout << "Player " << names[playerNumber] << "'s books are: ";
     goFishBooks[playerNumber].print(std::cout, GOFISH_PRINT);
 
     while(incorrect_input){
@@ -76,18 +77,12 @@ bool GoFishGame<s,r,d>::turn(int playerNumber){
                 return false;
             }
         } else {//--------------------------------ASK TA OR PROFESSOR----------------------------------------------------------
-            // goFishDeck.collect(goFishHands[playerNumber]);
-            // goFishDeck.collect(goFishBooks[playerNumber]);
-            // cout << "Player " << names[playerNumber] << " is removed from the game" << endl;
-            
-            // auto it_name = std::find(names.begin(), names.end(), names[playerNumber]);
-            // names.erase(it_name);
-
-            // auto it_hand = std::find(goFishHands.begin(), goFishHands.end(), goFishHands[playerNumber]);
-            // goFishHands.erase(it_hand);
-
-            // auto it_book = std::find(goFishBooks.begin(), goFishBooks.end(), goFishBooks[playerNumber]);
-            // goFishBooks.erase(it_book);
+            goFishDeck.collect(goFishHands[playerNumber]);
+            goFishDeck.collect(goFishBooks[playerNumber]);
+            int bookNum = std::distance(goFishBooks[playerNumber].begin(), goFishBooks[playerNumber].end()) / 4;
+            goFishScores.insert({names[playerNumber], bookNum});
+            invalidPlayers.push_back(playerNumber);
+            cout << "Player " << names[playerNumber] << " is removed from the game" << endl;
         }
 
 
@@ -117,7 +112,7 @@ void GoFishGame<s,r,d>::deal(){
 }
 
 //helper function to help sorting player books
-bool cmp(pair<int, int>& a, pair<int, int>& b)
+bool cmp(pair<std::string, int>& a, pair<std::string, int>& b)
 {
     return a.second > b.second;
 }
@@ -131,6 +126,7 @@ int GoFishGame<s,r,d>::play(){
 
     int players = (int)names.size();
     for(int i = 0; i < players; i++){
+        if( std::count(invalidPlayers.begin(),invalidPlayers.end(),i)) continue;
         while(collect_books(i)){}
     }
     
@@ -138,33 +134,38 @@ int GoFishGame<s,r,d>::play(){
     int bookNum = 0;
     while(GAME_NOT_END){
         for(int i = 0; i < players; i++){
+            if(std::count(invalidPlayers.begin(),invalidPlayers.end(),i)) continue;
             while(turn(i)){}
         }
 
         cout << "Round " << round << " finished:" << endl;
         for(int i = 0; i < players; i++){
             int bookNum = std::distance(goFishBooks[i].begin(), goFishBooks[i].end()) / 4;
-            cout << "Player " << names[n] << " has " << bookNum << " books made" << endl;
+            cout << "Player " << names[i] << " has " << bookNum << " books made" << endl;
         }
 
         if(goFishDeck.is_empty() || names.empty() || (int)names.size()==1){
             GAME_NOT_END = false;
-
+            if((int)names.size()==1){
+                for(int i = 0; i < players; i++){
+                    if(!std::count(invalidPlayers.begin(),invalidPlayers.end(),i)){
+                        goFishDeck.collect_books(goFishBooks[i]);
+                        goFishDeck.collect_books(goFishHands[i]);
+                        int bookNum = std::distance(goFishBooks[i].begin(), goFishBooks[i].end()) / 4;
+                        goFishScores.insert({names[i], bookNum});
+                        invalidPlayers.push_back(i);
+                        cout << "Player " << names[i] << " is removed from the game" << endl;
+                    }
+                }
+            }
             //print the players that has the most books
             //  after game ends, we get the book numbers for each player
             //  then, we collect the cards back into goFishDeck
-            std::unordered_map<int, int> playerRank;
-            for(int i = 0; i < players; i++){
-                int bookNum = std::distance(goFishBooks[i].begin(), goFishBooks[i].end()) / 4;
-                playerRank.insert({i, bookNum});
-                goFishDeck.collect(goFishHands[i]);
-                goFishDeck.collect(goFishBooks[i]);
-            }
 
-            std::sort(playerRank.begin(), playerRank.end(), cmp);
+            std::sort(goFishScores.begin(), goFishScores.end(), cmp);
             
             int prev_bookNum = 0;
-            for(auto it = playerRank.begin(); it != playerRank.end(); ++it){
+            for(auto it = goFishScores.begin(); it != goFishScores.end(); ++it){
                 if(prev_bookNum > it.second) break;
                 cout << "Player " << it.first << " ";
                 prev_bookNum = it.second;
@@ -173,7 +174,7 @@ int GoFishGame<s,r,d>::play(){
         round++;
     }
 
-    
+    return SUCCESS;
 }
 
 

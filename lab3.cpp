@@ -5,6 +5,7 @@
 
 #include "HoldEmGame.h"
 #include "PinochleGame.h"
+#include "GoFishGame.h"
 #include <memory>
 
 using namespace std;

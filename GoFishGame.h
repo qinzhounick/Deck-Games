@@ -24,6 +24,8 @@ class GoFishGame: public Game{
         d goFishDeck;
         std::vector< CardSet<r, s> > goFishHands;
         std::vector< CardSet<r, s> > goFishBooks;
+        std::map<std::string,int> goFishScores;
+        std::vector<int> invalidPlayers;
         virtual void deal();
         bool turn(int playerNumber);
 };
