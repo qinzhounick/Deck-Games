@@ -92,6 +92,37 @@ HoldEmRank & operator++ (HoldEmRank& h) {
     return h;
 }
 
+std::string printRank(HoldEmRank r){
+    if(r==HoldEmRank::two){
+        return "2";
+    }else if(r==HoldEmRank::three){
+        return "3";
+    }else if(r==HoldEmRank::four){
+        return "4";
+    }else if(r==HoldEmRank::five){
+        return "5";
+    }else if(r==HoldEmRank::six){
+        return "6";
+    }else if(r==HoldEmRank::seven){
+        return "7";
+    }else if(r==HoldEmRank::eight){
+        return "8";
+    }else if(r==HoldEmRank::nine){
+        return "9";
+    }else if(r==HoldEmRank::ten){
+        return "10";
+    }else if(r==HoldEmRank::jack){
+        return "J";
+    }else if(r==HoldEmRank::queen){
+        return "Q";
+    }else if(r==HoldEmRank::king){
+        return "K";
+    }else if(r==HoldEmRank::ace){
+        return "A";
+    }
+    return "?";
+}
+
 //Default constructor for HoldEmDeck
 HoldEmDeck::HoldEmDeck() {
     for (HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank) { //loop through HoldEm ranks

@@ -7,11 +7,13 @@
 #pragma once
 #include <ostream>
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <functional>
 #include <random>
 #include <algorithm>
+#include <map>
 
 //declaration of template struct Card
 template <typename R, typename S>

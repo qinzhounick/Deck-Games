@@ -37,6 +37,8 @@ enum class HoldEmRank {
 //decalre prefix increment operator and operator<<
 std::ostream & operator<< (std::ostream& os, const HoldEmRank& h);
 HoldEmRank & operator++ (HoldEmRank& h);
+std::string printRank(HoldEmRank r);
+
 
 //declare HoldEmDeck class that inherits from Deck
 class HoldEmDeck: public Deck<HoldEmRank, Suit>{

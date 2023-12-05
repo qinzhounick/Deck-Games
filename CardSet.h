@@ -33,6 +33,7 @@ class CardSet {
         //static std::vector<Card<R,S> > * getCards(CardSet<R,S> & cardSet); 
         typename std::vector<Card<R,S> >::iterator begin(); //begin function
         typename std::vector<Card<R,S> >::iterator end(); //end function
+        Card<R,S> back(); //back function
 
         typedef Card<R, S> card_type;
         typedef typename vector<Card<R, S>>::iterator iter;

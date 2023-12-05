@@ -59,6 +59,27 @@ PinochleRank & operator++ (PinochleRank & r){
     return r;
 }
 
+//print PinochleRank
+std::string printRank(PinochleRank r){
+    if(r==PinochleRank::nine){
+        return "9";
+    }else if(r==PinochleRank::jack){
+        return "J";
+    }else if(r==PinochleRank::queen){
+        return "Q";
+    }else if(r==PinochleRank::king){
+        return "K";
+    }else if(r==PinochleRank::ten){
+        return "10";
+    }else if(r==PinochleRank::ace){
+        return "A";
+    }
+
+    return "?";
+}
+
+
+
 //default constructor
 PinochleDeck::PinochleDeck(){
     for (PinochleRank rank = PinochleRank::nine; rank <= PinochleRank::ace; ++rank) { //loop through rank

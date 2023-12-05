@@ -94,6 +94,12 @@ typename vector<Card<R,S> >::iterator CardSet<R,S>::end() {
     return cards.end();
 }
 
+//back function returns the last card in the cardset
+template<typename R, typename S>
+Card<R,S> CardSet<R,S>::back() {
+    if (!cards.empty()) return cards.back();
+}
+
 template<typename R, typename S>
 void CardSet<R,S>::add_card(Card<R,S> & card){
     cards.push_back(card);

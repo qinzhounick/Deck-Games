@@ -3,7 +3,7 @@
 using namespace std;
 
 template <typename s, typename r, typename d>
-GoFishGame<s,r,d>::GoFishGame(int argc, char * argv): Game(argc, argv){
+GoFishGame<s,r,d>::GoFishGame(int argc, const char * argv[]): Game(argc, argv){
     CardSet<r, s> emptyCardSet;  //declare empty player hands
     for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
@@ -54,7 +54,10 @@ bool GoFishGame<s,r,d>::turn(int playerNumber){
 
         if(std::find_if(goFishHands[playerNumber].begin(), 
                         goFishHands[playerNumber].end(), 
-                        [&input_rank](const Card<r,s> & card) { return card._rank == input_rank;}) 
+                        [&input_rank](const Card<r,s> & card) { 
+                            std::string str = printRank(card._rank); 
+                            return str == input_rank;
+                        }) 
            && input_player>=0 && input_player<=(int)names.size()-1 && input_player!=playerNumber){
 
             incorrect_input = false;
@@ -70,8 +73,11 @@ bool GoFishGame<s,r,d>::turn(int playerNumber){
         cout << "Go Fish!" << endl;
         if(!goFishDeck.is_empty()) {
             goFishDeck >> goFishHands[playerNumber];
-            auto it_card = std::prev(numbers.end());
-            if(it_card._rank == input_rank) {
+            auto last_card = goFishHands[playerNumber].back();
+
+            //get the string for the rank of the last card
+            std::string str = printRank(card._rank);
+            if(str == input_rank) {
                 return true;
             } else {
                 return false;
@@ -165,7 +171,7 @@ int GoFishGame<s,r,d>::play(){
             std::sort(goFishScores.begin(), goFishScores.end(), cmp);
             
             int prev_bookNum = 0;
-            for(auto it = goFishScores.begin(); it != goFishScores.end(); ++it){
+            for(auto const& it: goFishScores){
                 if(prev_bookNum > it.second) break;
                 cout << "Player " << it.first << " ";
                 prev_bookNum = it.second;
@@ -180,14 +186,14 @@ int GoFishGame<s,r,d>::play(){
 
 //-----------------------------------------------Class Template Specializations-----------------------------------------------------
 template <>
-GoFishGame<Suit, HoldEmRank, HoldEmDeck>::GoFishGame(int argc, char* argv): Game(argc, argv){
+GoFishGame<Suit, HoldEmRank, HoldEmDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     CardSet<HoldEmRank, Suit> emptyCardSet;  //declare empty player hands
     for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
         goFishBooks.push_back(emptyCardSet); 
     }
     for(HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank){
-        int count = std::count_if(goFishDeck.cards.begin(), goFishDeck.cards.end(), [&rank](const Card<HoldEmRank,Suit> & card) { return card._rank == rank;});
+        int count = std::count_if(goFishDeck.begin(), goFishDeck.end(), [&rank](const Card<HoldEmRank,Suit> & card) { return card._rank == rank;});
         if(count < 4){
             throw std::runtime_error("Invalid deck for GoFishGame");
         }
@@ -225,14 +231,14 @@ GoFishGame<Suit, HoldEmRank, HoldEmDeck>::GoFishGame(int argc, char* argv): Game
 // }
 
 template <>
-GoFishGame<Suit, PinochleRank, PinochleDeck>::GoFishGame(int argc, char* argv): Game(argc, argv){
+GoFishGame<Suit, PinochleRank, PinochleDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     CardSet<PinochleRank, Suit> emptyCardSet;  //declare empty player hands
     for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
         goFishBooks.push_back(emptyCardSet); 
     }
     for(PinochleRank rank = PinochleRank::nine; rank <= PinochleRank::ace; ++rank){
-        int count = std::count_if(goFishDeck.cards.begin(), goFishDeck.cards.end(), [&rank](const Card<PinochleRank,Suit> & card) { return card._rank == rank;});
+        int count = std::count_if(goFishDeck.begin(), goFishDeck.end(), [&rank](const Card<PinochleRank,Suit> & card) { return card._rank == rank;});
         if(count < 4){
             throw std::runtime_error("Invalid deck for GoFishGame");
         }
@@ -240,14 +246,14 @@ GoFishGame<Suit, PinochleRank, PinochleDeck>::GoFishGame(int argc, char* argv): 
 }
 
 template <>
-GoFishGame<Color, UnoRank, UnoDeck>::GoFishGame(int argc, char* argv): Game(argc, argv){
+GoFishGame<Color, UnoRank, UnoDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     CardSet<UnoRank, Color> emptyCardSet;  //declare empty player hands
     for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
         goFishBooks.push_back(emptyCardSet); 
     }
     for(UnoRank rank = UnoRank::zero; rank <= UnoRank::blank; ++rank){
-        int count = std::count_if(goFishDeck.cards.begin(), goFishDeck.cards.end(), [&rank](const Card<UnoRank,Color> & card) { return card._rank == rank;});
+        int count = std::count_if(goFishDeck.begin(), goFishDeck.end(), [&rank](const Card<UnoRank,Color> & card) { return card._rank == rank;});
         if(count < 4){
             throw std::runtime_error("Invalid deck for GoFishGame");
         }

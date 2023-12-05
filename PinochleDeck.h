@@ -24,6 +24,7 @@ enum class PinochleRank {
 //declare prefix operator++ and operator<<
 std::ostream & operator<< (std::ostream& os, const PinochleRank& r);
 PinochleRank & operator++ (PinochleRank& r);
+std::string printRank(PinochleRank r);
 
 class PinochleDeck: public Deck<PinochleRank, Suit>{
     public:
