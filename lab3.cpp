@@ -10,7 +10,6 @@
 
 using namespace std;
 const int GAME_NAME = 1;
-const int DECK_NAME = 2;
 //create function to create game
 shared_ptr<Game> create(int argc, const char *argv[]) {
     shared_ptr<Game> game;  //declare game shared pointer

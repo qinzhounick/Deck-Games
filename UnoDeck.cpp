@@ -123,3 +123,41 @@ UnoDeck::UnoDeck(){
         cards.push_back(Card<UnoRank, Color>(rank, Color::black));
     }
 }
+
+std::string printRank(UnoRank r) {
+    if(r==UnoRank::zero){
+        return  "0";
+    }else if(r==UnoRank::one){
+        return  "1";
+    }else if(r==UnoRank::two){
+        return  "2";
+    }else if(r==UnoRank::three){
+        return  "3";
+    }else if(r==UnoRank::four){
+        return  "4";
+    }else if(r==UnoRank::five){
+        return  "5";
+    }else if(r==UnoRank::six){
+        return  "6";
+    }else if(r==UnoRank::seven){
+        return  "7";
+    }else if(r==UnoRank::eight){
+        return  "8";
+    }else if(r==UnoRank::nine){
+        return  "9";
+    }else if(r==UnoRank::skip){
+        return  "Skip";
+    }else if(r==UnoRank::reverse){
+        return  "Reverse";
+    }else if(r==UnoRank::drawtwo){
+        return  "Drawtwo";
+    }else if(r==UnoRank::drawfour){
+        return  "Drawfour";
+    }else if(r==UnoRank::wild){
+        return  "Wild";
+    }else if(r==UnoRank::blank){
+        return  "Blank";
+    }
+    return  "?";
+
+}

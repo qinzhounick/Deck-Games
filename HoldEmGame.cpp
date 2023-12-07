@@ -61,7 +61,7 @@ int HoldEmGame::play() {
         deal();  //deal cards to the players
         for(int n=0; n<(int)names.size(); n++) {  //print out players' hands
             cout << names[n] << "'s hand is: ";
-            holdEmHands[n].print(cout, 2);
+            holdEmHands[n].print(cout, HOLDEM_HAND_LEN);
         }
         cout << '\n';
 
@@ -84,7 +84,7 @@ int HoldEmGame::play() {
             x._rank = holdem_hand_evaluation(x._cardset);  //set player ranks
         }
         std::sort(playerS.begin(), playerS.end()); //sort player by rank
-        for(int i=playerS.size()-1; i>=0; i--){  //loop through vector
+        for(int i=playerS.size() - NULL_VALUE; i >= 0; i --){  //loop through vector
             cout << "Player " << playerS[i]._name << "'s hand: ";
             playerS[i]._cardset.print(cout, 5);
             cout << "Rank: " << playerS[i]._rank << '\n' << '\n';
@@ -309,7 +309,7 @@ bool operator< (const HoldEmGame::playerStruct & player1, const HoldEmGame::play
 
 //helper function for straight flush rank
 bool straightflush_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldEmRank, Suit> > player2Cards){
-    int n = player1Cards.size() - 1;
+    int n = player1Cards.size() - NULL_VALUE;
     if(player1Cards[n]._rank < player2Cards[n]._rank) return true;
 
     return false;
@@ -321,14 +321,14 @@ bool fourofakind_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Car
     int player1_index, player2_index; //declare indices
     
     //find the indices of the pairs in both players' hands
-    for(int i=0; i<(int)player1Cards.size()-2; i++){
+    for(int i=0; i<(int)player1Cards.size() - HOLDEM_HAND_LEN; i++){
         //check player1 cards
-        if(player1Cards[i]._rank==player1Cards[i+1]._rank){
+        if(player1Cards[i]._rank==player1Cards[i + NEIGHBOR_CARD]._rank){
             player1_index = i;
         }
 
         //check player2 cards
-        if(player2Cards[i]._rank==player2Cards[i+1]._rank){
+        if(player2Cards[i]._rank==player2Cards[i + NEIGHBOR_CARD]._rank){
             player2_index = i;
         }
     }
@@ -343,8 +343,8 @@ bool flushOrXhigh_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Ca
     // boolean vector showing the comparison result of the card at the same location in two players' hands
     vector<bool> sameCards{true, false, false, false, false, false};
     // going from the last card to the first card
-    int i = player1Cards.size()-1;
-    int j = player2Cards.size()-1;
+    int i = player1Cards.size()-NULL_VALUE;
+    int j = player2Cards.size()-NULL_VALUE;
     int k = 1; // index for the boolean vector
 
     // compare each card's rank
@@ -366,10 +366,10 @@ bool flushOrXhigh_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Ca
 
 //helper function for straight rank
 bool straight_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldEmRank, Suit> > player2Cards){
-    int n = player1Cards.size() - 1;
+    int n = player1Cards.size() - NULL_VALUE;
     if(player1Cards[n]._rank < player2Cards[n]._rank) return true;
     if(player1Cards[n]._rank == player2Cards[n]._rank && player1Cards[n]._rank == HoldEmRank::ace){
-        if(player1Cards[n-1]._rank < player2Cards[n-1]._rank) return true;
+        if(player1Cards[n-NEIGHBOR_CARD]._rank < player2Cards[n-NEIGHBOR_CARD]._rank) return true;
     }
 
     return false;
@@ -382,14 +382,14 @@ bool threeofakindOrFullhouse_helper(vector<Card<HoldEmRank, Suit> > player1Cards
     int player1_index, player2_index; //declare indices
     
     //find the indices of the pairs in both players' hands
-    for(int i=0; i<(int)player1Cards.size()-2; i++){
+    for(int i=0; i<(int)player1Cards.size()-HOLDEM_HAND_LEN; i++){
         //check player1 cards
-        if(player1Cards[i]._rank==player1Cards[i+1]._rank && player1Cards[i]._rank==player1Cards[i+2]._rank){
+        if(player1Cards[i]._rank==player1Cards[i+NEIGHBOR_CARD]._rank && player1Cards[i]._rank==player1Cards[i+HOLDEM_HAND_LEN]._rank){
             player1_index = i;
         }
 
         //check player2 cards
-        if(player2Cards[i]._rank==player2Cards[i+1]._rank && player2Cards[i]._rank==player2Cards[i+2]._rank){
+        if(player2Cards[i]._rank==player2Cards[i+NEIGHBOR_CARD]._rank && player2Cards[i]._rank==player2Cards[i+HOLDEM_HAND_LEN]._rank){
             player2_index = i;
         }
     }
@@ -408,9 +408,9 @@ bool twopair_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<Ho
     bool player2_found_pair = false;
 
     //find the indices of the pairs in both players' hands
-    for(int i=0; i<(int)player1Cards.size()-1; i++){
+    for(int i=0; i<(int)player1Cards.size()-NULL_VALUE; i++){
         //find player1 pairs
-        if(player1Cards[i]._rank==player1Cards[i+1]._rank){
+        if(player1Cards[i]._rank==player1Cards[i+NEIGHBOR_CARD]._rank){
             if(!player1_found_pair){
                 player1_pair1 = i;
                 player1_found_pair = true;
@@ -418,7 +418,7 @@ bool twopair_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<Ho
         }
 
         //find player2 pairs
-        if(player2Cards[i]._rank==player2Cards[i+1]._rank){
+        if(player2Cards[i]._rank==player2Cards[i+NEIGHBOR_CARD]._rank){
             if(!player2_found_pair){
                 player2_pair1 = i;
                 player2_found_pair = true;
@@ -452,15 +452,15 @@ bool pair_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldE
     int player1_pair_index,  player2_pair_index; //declare indices
 
     //find the indices of the pairs in both players' hands
-    for(int i=0; i<(int)player1Cards.size()-1; i++){
+    for(int i=0; i<(int)player1Cards.size()-NULL_VALUE; i++){
         //check player1 cards
-        if(player1Cards[i]._rank==player1Cards[i+1]._rank){
-            player1_pair_index = i + 1;
+        if(player1Cards[i]._rank==player1Cards[i+NEIGHBOR_CARD]._rank){
+            player1_pair_index = i + NEIGHBOR_CARD;
         }
 
         //check player2 cards
-        if(player2Cards[i]._rank==player2Cards[i+1]._rank){
-            player2_pair_index = i + 1;
+        if(player2Cards[i]._rank==player2Cards[i+NEIGHBOR_CARD]._rank){
+            player2_pair_index = i + NEIGHBOR_CARD;
         }
     }
 
@@ -474,18 +474,18 @@ bool pair_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldE
     // going in order to compare thr rest three single cards  
     vector<bool> sameCards{true, false, false, false};
     // checking from the last card to the first card in players' hands
-    int i = player1Cards.size()-1; 
-    int j = player2Cards.size()-1;
+    int i = player1Cards.size()-NULL_VALUE; 
+    int j = player2Cards.size()-NULL_VALUE;
     int k = 1;
     while(i>=0 && j>=0){
         // skip the pair
         if(i==player1_pair_index){
-            i -= 2;
+            i -= HOLDEM_HAND_LEN;
             if(i<0) break;
         }
         // skip the pair
         if(j==player2_pair_index){
-            j -= 2;
+            j -= HOLDEM_HAND_LEN;
             if(j<0) break;
         }
         // if two single cards at the same location in two players' hands have the same rank, 

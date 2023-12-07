@@ -12,4 +12,3 @@ enum class Color {
 
 std::ostream & operator<< (std::ostream& os, const Color& c);
 Color & operator++ (Color& c);
-std::string printRank(Color c);

@@ -32,3 +32,4 @@ class UnoDeck: public Deck<UnoRank, Color>{
 
 std::ostream & operator<< (std::ostream& os, const UnoRank& r);
 UnoRank & operator++ (UnoRank& r);
+std::string printRank(UnoRank r);

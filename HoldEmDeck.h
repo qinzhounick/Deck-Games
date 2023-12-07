@@ -10,6 +10,9 @@
 #include "Suit.h"
 
 //const int variable to avoid magic number
+const int NULL_VALUE = 1;
+const int NEIGHBOR_CARD = 1;
+const int HOLDEM_HAND_LEN = 2; // initial player's hand's card length
 const int FLOP_PRINT = 3;  //flop print size
 const int TURN_PRINT = 4;  //turn print size
 const int RIVER_PRINT = 5;  //river print size 
