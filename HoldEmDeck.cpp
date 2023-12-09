@@ -131,3 +131,36 @@ HoldEmDeck::HoldEmDeck() {
         }
     }
 }
+
+HoldEmRank HoldEmDeck::getRank(std::string & s){
+    if(s=="2"){
+        return HoldEmRank::two;
+    }else if(s=="3"){
+        return HoldEmRank::three;
+    }else if(s=="4"){
+        return HoldEmRank::four;
+    }else if(s=="5"){
+        return HoldEmRank::five;
+    }else if(s=="6"){
+        return HoldEmRank::six;
+    }else if(s=="7"){
+        return HoldEmRank::seven;
+    }else if(s=="8"){
+        return HoldEmRank::eight;
+    }else if(s=="9"){
+        return HoldEmRank::nine;
+    }else if(s=="10"){
+        return HoldEmRank::ten;
+    }else if(s=="J"){
+        return HoldEmRank::jack;
+    }else if(s=="Q"){
+        return HoldEmRank::queen;
+    }else if(s=="K"){
+        return HoldEmRank::king;
+    }else if(s=="A"){
+        return HoldEmRank::ace;
+    }
+        
+    return HoldEmRank::undefined;
+
+}

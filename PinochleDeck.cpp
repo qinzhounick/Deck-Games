@@ -89,3 +89,22 @@ PinochleDeck::PinochleDeck(){
         }
     }
 }
+
+PinochleRank PinochleDeck::getRank(std::string & s){
+    if(s=="9"){
+        return PinochleRank::nine;
+    }else if(s=="J"){
+        return PinochleRank::jack;
+    }else if(s=="Q"){
+        return PinochleRank::queen;
+    }else if(s=="K"){
+        return PinochleRank::king;
+    }else if(s=="10"){
+        return PinochleRank::ten;
+    }else if(s=="A"){
+        return PinochleRank::ace;
+    }
+        
+    return PinochleRank::undefined;
+
+}

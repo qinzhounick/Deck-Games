@@ -5,10 +5,10 @@ const int LAST_TWO_PLAYERS = 2;
 const int DECK_NAME = 2;
 const int GOFISH_ARGC = 4;
 const int GOFISH_BOOK_LEN = 4;
-const int GOFISH_PRINT = 7;
+const int GOFISH_PRINT = 20;
 
-template <typename s, typename r, typename d>
-GoFishGame<s,r,d>::GoFishGame(int argc, const char * argv[]): Game(argc, argv){
+template <typename r, typename s, typename d>
+GoFishGame<r,s,d>::GoFishGame(int argc, const char * argv[]): Game(argc, argv){
     deckType = argv[DECK_NAME];
     CardSet<r, s> emptyCardSet;  //declare empty player hands
     for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
@@ -24,8 +24,8 @@ GoFishGame<s,r,d>::GoFishGame(int argc, const char * argv[]): Game(argc, argv){
     }  
 }
 
-template <typename s, typename r, typename d>
-bool GoFishGame<s,r,d>::collect_books(int playerNumber){
+template <typename r, typename s, typename d>
+bool GoFishGame<r,s,d>::collect_books(int playerNumber){
     bool flag = false;
     for(HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank){
         std::function<bool(Card<r,s>&)> predicate = [&rank](const Card<r,s> & card) { return card._rank == rank;};
@@ -41,38 +41,47 @@ bool GoFishGame<s,r,d>::collect_books(int playerNumber){
 }
 
 
-template <typename s, typename r, typename d>
-bool GoFishGame<s,r,d>::turn(int playerNumber){
+template <typename r, typename s, typename d>
+bool GoFishGame<r,s,d>::turn(int playerNumber){
     bool incorrect_input = true;
     string input_rank;
-    int input_player;
+    string input_player;
+    int input_player_index;
     cout << "Player " << names[playerNumber] << "'s hand is: ";
     goFishHands[playerNumber].print(std::cout, GOFISH_PRINT);
     cout << "Player " << names[playerNumber] << "'s books are: ";
     goFishBooks[playerNumber].print(std::cout, GOFISH_PRINT);
 
     while(incorrect_input){
+        //---------------------------------------CHECK FOR VALID INPUT----------------------------------------
         cout << "What card rank do you want to ask for?(card rank should be in your hand)" << endl;
         cin >> input_rank;
-        cout << "Which player do you want to ask for it from?(Number of a player; Cannot be your Number)" << endl;
+        cout << "Which player do you want to ask for it from?(Index number of a player; Cannot be your Number)" << endl;
         cin >> input_player;
 
-        // auto predicate = 
+        input_player_index = stoi(input_player);
+        auto predicate = [&input_rank](const Card<r,s> & card) { 
+                            std::string str = printRank(card._rank); 
+                            return str == input_rank;
+                        };
 
         if(std::find_if(goFishHands[playerNumber].begin(), 
                         goFishHands[playerNumber].end(), 
-                        [&input_rank](const Card<r,s> & card) { 
-                            std::string str = printRank(card._rank); 
-                            return str == input_rank;
-                        }) != goFishHands[playerNumber].end()
-           && input_player>=0 && input_player<=(int)names.size()-1 && input_player!=playerNumber){
+                        predicate) != goFishHands[playerNumber].end()
+           && input_player_index>=0 && input_player_index<=(int)names.size()-1 
+           && input_player_index!=playerNumber){
 
             incorrect_input = false;
+            cout << "Invalid input. Please try again." << endl;
             
         }
     }
 
-    if(goFishHands[playerNumber].request(goFishHands[input_player], input_rank)){
+    
+    r request_rank = goFishDeck.getRank(input_rank);
+    
+
+    if(goFishHands[playerNumber].request(goFishHands[input_player_index], request_rank)){
         while(collect_books(playerNumber)){
         }
         return true;
@@ -92,7 +101,7 @@ bool GoFishGame<s,r,d>::turn(int playerNumber){
         } else {//--------------------------------ASK TA OR PROFESSOR----------------------------------------------------------
             goFishDeck.collect(goFishHands[playerNumber]);
             int bookNum = std::distance(goFishBooks[playerNumber].begin(), goFishBooks[playerNumber].end()) / GOFISH_BOOK_LEN;
-            goFishScores.insert({names[playerNumber], bookNum});
+            goFishScores.push_back({names[playerNumber], bookNum});
             invalidPlayers.push_back(playerNumber);
             cout << "Player " << names[playerNumber] << " is removed from the game" << endl;
         }
@@ -100,12 +109,18 @@ bool GoFishGame<s,r,d>::turn(int playerNumber){
 
     }
 
+    cout << endl << "End of turn: " << endl;
+    cout << "Player " << names[playerNumber] << "'s hand is: ";
+    goFishHands[playerNumber].print(std::cout, GOFISH_PRINT);
+    cout << "Player " << names[playerNumber] << "'s books are: ";
+    goFishBooks[playerNumber].print(std::cout, GOFISH_PRINT);
+
     return false;
 }
 
 
-template <typename s, typename r, typename d>
-void GoFishGame<s,r,d>::deal(){
+template <typename r, typename s, typename d>
+void GoFishGame<r,s,d>::deal(){
     goFishDeck.shuffle();
     const int numCardTwoMorePlyr = 7;
     const int numCardOnlyTwoPlyr = 5;
@@ -132,8 +147,8 @@ bool cmp(pair<std::string, int>& a, pair<std::string, int>& b)
 }
 
 //play function
-template <typename s, typename r, typename d>
-int GoFishGame<s,r,d>::play(){
+template <typename r, typename s, typename d>
+int GoFishGame<r,s,d>::play(){
     bool GAME_NOT_END = true;
     deal();
 
@@ -157,7 +172,7 @@ int GoFishGame<s,r,d>::play(){
             cout << "Player " << names[i] << " has " << bookNum << " books made" << endl;
         }
 
-        int sumBooks = std::accumulate(goFishScores.begin(), goFishScores.end(), 0);
+        int sumBooks = 0; //std::accumulate(goFishScores.begin(), goFishScores.end(), 0);
 
         const int HoldEmMax = 13;
         const int PinochleMax = 26;
@@ -174,7 +189,7 @@ int GoFishGame<s,r,d>::play(){
                     if(!std::count(invalidPlayers.begin(),invalidPlayers.end(),i)){
                         goFishDeck.collect(goFishHands[i]);
                         int bookNum = std::distance(goFishBooks[i].begin(), goFishBooks[i].end()) / 4;
-                        goFishScores.insert({names[i], bookNum});
+                        goFishScores.push_back({names[i], bookNum});
                         invalidPlayers.push_back(i);
                         cout << "Player " << names[i] << " is removed from the game" << endl;
                     }
@@ -202,7 +217,7 @@ int GoFishGame<s,r,d>::play(){
 
 //-----------------------------------------------Class Template Specializations-----------------------------------------------------
 template <>
-GoFishGame<Suit, HoldEmRank, HoldEmDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
+GoFishGame<HoldEmRank, Suit, HoldEmDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     CardSet<HoldEmRank, Suit> emptyCardSet;  //declare empty player hands
     for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
@@ -219,7 +234,7 @@ GoFishGame<Suit, HoldEmRank, HoldEmDeck>::GoFishGame(int argc, const char* argv[
 
 
 template <>
-GoFishGame<Suit, PinochleRank, PinochleDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
+GoFishGame<PinochleRank, Suit, PinochleDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     CardSet<PinochleRank, Suit> emptyCardSet;  //declare empty player hands
     for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
@@ -234,7 +249,7 @@ GoFishGame<Suit, PinochleRank, PinochleDeck>::GoFishGame(int argc, const char* a
 }
 
 template <>
-GoFishGame<Color, UnoRank, UnoDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
+GoFishGame<UnoRank, Color, UnoDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     CardSet<UnoRank, Color> emptyCardSet;  //declare empty player hands
     for(int i = INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
@@ -251,10 +266,10 @@ GoFishGame<Color, UnoRank, UnoDeck>::GoFishGame(int argc, const char* argv[]): G
 
 //-----------------------------------------------collect_books Specializations-----------------------------------------------------
 template <>
-bool GoFishGame<Suit, HoldEmRank, HoldEmDeck>::collect_books(int playerNumber){
+bool GoFishGame<HoldEmRank, Suit, HoldEmDeck>::collect_books(int playerNumber){
     bool flag = false;
     for(HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank){
-        std::function<bool(Card<HoldEmRank,Suit>&)> predicate = [&rank](const Card<HoldEmRank,Suit> & card) { return card._rank == rank;};
+        auto predicate = [&rank](const Card<HoldEmRank,Suit> & card) { return card._rank == rank;};
         int count = std::count_if(goFishHands[playerNumber].begin(), goFishHands[playerNumber].end(), predicate);
         if(count >= GOFISH_ARGC){
             flag = true;
@@ -267,10 +282,10 @@ bool GoFishGame<Suit, HoldEmRank, HoldEmDeck>::collect_books(int playerNumber){
 }
 
 template <>
-bool GoFishGame<Suit, PinochleRank, PinochleDeck>::collect_books(int playerNumber){
+bool GoFishGame<PinochleRank, Suit, PinochleDeck>::collect_books(int playerNumber){
     bool flag = false;
     for(PinochleRank rank = PinochleRank::nine; rank <= PinochleRank::ace; ++rank){
-        std::function<bool(Card<PinochleRank, Suit>&)> predicate = [&rank](const Card<PinochleRank,Suit> & card) { return card._rank == rank;};
+        auto predicate = [&rank](const Card<PinochleRank,Suit> & card) { return card._rank == rank;};
         int count = std::count_if(goFishHands[playerNumber].begin(), goFishHands[playerNumber].end(), predicate);
         if(count >= GOFISH_ARGC){
             flag = true;
@@ -282,10 +297,10 @@ bool GoFishGame<Suit, PinochleRank, PinochleDeck>::collect_books(int playerNumbe
 }
 
 template <>
-bool GoFishGame<Color, UnoRank, UnoDeck>::collect_books(int playerNumber){
+bool GoFishGame<UnoRank, Color, UnoDeck>::collect_books(int playerNumber){
     bool flag = false;
     for(UnoRank rank = UnoRank::zero; rank <= UnoRank::blank; ++rank){
-        std::function<bool(Card<UnoRank,Color>&)> predicate = [&rank](const Card<UnoRank,Color> & card) { return card._rank == rank;};
+        auto predicate = [&rank](const Card<UnoRank,Color> & card) { return card._rank == rank;};
         int count = std::count_if(goFishHands[playerNumber].begin(), goFishHands[playerNumber].end(), predicate);
         if(count >= GOFISH_ARGC){
             flag = true;

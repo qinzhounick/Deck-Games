@@ -161,3 +161,40 @@ std::string printRank(UnoRank r) {
     return  "?";
 
 }
+
+UnoRank UnoDeck::getRank(std::string & s){
+    if(s=="0"){
+        return  UnoRank::zero;
+    }else if(s=="1"){
+        return  UnoRank::one;
+    }else if(s=="2"){
+        return  UnoRank::two;
+    }else if(s=="3"){
+        return  UnoRank::three;
+    }else if(s=="4"){
+        return  UnoRank::four;
+    }else if(s=="5"){
+        return  UnoRank::five;
+    }else if(s=="6"){
+        return  UnoRank::six;
+    }else if(s=="7"){
+        return  UnoRank::seven;
+    }else if(s=="8"){
+        return  UnoRank::eight;
+    }else if(s=="9"){
+        return  UnoRank::nine;
+    }else if(s=="Skip"){
+        return  UnoRank::skip;
+    }else if(s=="Reverse"){
+        return  UnoRank::reverse;
+    }else if(s=="Drawtwo"){
+        return  UnoRank::drawtwo;
+    }else if(s=="Drawfour"){
+        return  UnoRank::drawfour;
+    }else if(s=="Wild"){
+        return  UnoRank::wild;
+    }else if(s=="Blank"){
+        return  UnoRank::blank;
+    }
+    return  UnoRank::undefined;
+}

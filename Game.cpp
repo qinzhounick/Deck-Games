@@ -11,7 +11,16 @@ using namespace std;
 //store player names from commandline arguments
 //  to vector names
 Game::Game(int argc, const char *argv[]) {
-    for(int i = INDEX; i<argc; i++) {
-        names.push_back(argv[i]);
+    string game_name = argv[GAME_NAME];
+    if(game_name == "GoFish"){
+        for(int i = GOFISH_INDEX; i<argc; i++) {
+            names.push_back(argv[i]);
+        }
+    }else{
+        for(int i = INDEX; i<argc; i++) {
+            names.push_back(argv[i]);
+        }
     }
+        
+    
 }

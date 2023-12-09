@@ -44,7 +44,7 @@ class CardSet {
         void erase(iter begin, iter end);
         void collect(CardSet<R, S> & col); //collect cards from CardSet back to deck
         
-        void collect_if(CardSet<R, S> deck, std::function<bool(Card<R,S>&)> pred);
+        void collect_if(CardSet<R, S> deck, std::function<bool (Card<R, S>&)> pred);
         bool request(CardSet<R, S> & cardset, R & rank);
         
 };

@@ -39,6 +39,7 @@
         "random": "cpp",
         "utility": "cpp",
         "typeinfo": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "string": "cpp"
     }
 }

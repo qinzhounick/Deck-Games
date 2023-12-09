@@ -27,6 +27,7 @@ enum class UnoRank {
 class UnoDeck: public Deck<UnoRank, Color>{
     public:
         UnoDeck();  //default constructor
+        UnoRank getRank(std::string & s);
 };
 
 

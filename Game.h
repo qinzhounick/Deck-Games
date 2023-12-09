@@ -9,6 +9,8 @@
 #include <vector>
 #include <string>
 const int INDEX = 2;
+const int GOFISH_INDEX = 3;
+const int GAME_NAME = 1;
 //Game class
 class Game {
     public:

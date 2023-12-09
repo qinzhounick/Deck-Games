@@ -47,4 +47,5 @@ std::string printRank(HoldEmRank r);
 class HoldEmDeck: public Deck<HoldEmRank, Suit>{
     public:
         HoldEmDeck(); //default constuctor
+        HoldEmRank getRank(std::string & s);
 };

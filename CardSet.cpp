@@ -2,7 +2,7 @@
 //Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: source file for CardSet
-//  define print, operator>>, is_empty function, operator>>, 
+//  define print, operator>>, is_empty function, 
 //  a copy constructor, a getter member function
 
 #include "CardSet.h"
@@ -25,6 +25,7 @@ void CardSet<R, S>::print(ostream& os, size_t size) {
         }
         i++;
     }
+    os << endl;
 }
 
 //is_empty function
@@ -67,21 +68,6 @@ CardSet<R,S>::CardSet(const CardSet<R,S> & cardSet_cp){
     cards = cardSet_cp.cards;
 }
 
-// //copy constructor 2
-// template<typename R, typename S>
-// CardSet<R,S>::CardSet(const vector<Card<R,S> > & card_cp){
-//     cards = card_cp;
-// }
-
-/*
-//getter member function
-template<typename R, typename S>
-vector<Card<R,S> > * CardSet<R,S>::getCards(CardSet<R,S> & cardSet){
-    vector<Card<R,S> > *tmp = &cardSet.cards;
-    return tmp;
-}
-*/
-
 //begin function returns an iterator that points to cards.begin()
 template<typename R, typename S>
 typename vector<Card<R,S> >::iterator CardSet<R,S>::begin() {
@@ -97,7 +83,7 @@ typename vector<Card<R,S> >::iterator CardSet<R,S>::end() {
 //back function returns the last card in the cardset
 template<typename R, typename S>
 Card<R,S> CardSet<R,S>::back() {
-    if (!cards.empty()) return cards.back();
+    return cards.back();
 }
 
 template<typename R, typename S>
@@ -128,20 +114,25 @@ void CardSet<R, S>::collect(CardSet<R, S> & col) {
 }
 
 template<typename R, typename S>
-void collect_if(CardSet<R,S> deck, std::function<bool(Card<R,S>&)> pred) {
-    std::copy_if(deck.begin(), deck.end(), std::back_inserter(CardSet<R,S>::begin()), pred);
+void CardSet<R,S>::collect_if(CardSet<R,S> deck, std::function<bool(Card<R,S>&)> pred) {
+    std::copy_if(deck.begin(), deck.end(), std::back_inserter(cards), pred);
     deck.erase(std::remove_if(deck.begin(), deck.end(), pred), deck.end());
 }
 
+
 template<typename R, typename S>
 bool CardSet<R,S>::request(CardSet<R, S> & cardset, R & rank) {
-    auto iter = std::find(cardset.begin(), cardset.end(), [&rank](const Card<R,S> & card) { return card._rank == rank;});
+    auto iter = std::find_if(cardset.begin(), cardset.end(), [&rank](const Card<R, S>& card) {
+        return card._rank == rank;
+    });
 
     if (iter == cardset.end()) {
         return false;
     }
 
     cards.push_back(std::move(*iter)); // Move the card to this CardSet
-    cardset.erase(iter);
+    const int advance = 1;
+    auto end = iter + advance;
+    cardset.erase(iter, end);  //remove from the old card set
     return true;
 }

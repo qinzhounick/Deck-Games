@@ -12,11 +12,11 @@
 #include "UnoDeck.h"
 
 
-template <typename s=Suit, typename r=HoldEmRank, typename d=HoldEmDeck>
+template <typename r=HoldEmRank, typename s=Suit, typename d=HoldEmDeck>
 class GoFishGame: public Game{
     public:
         GoFishGame(int argc, const char * argv[]);
-        virtual ~GoFishGame();
+        virtual ~GoFishGame(){};
         virtual int play();  //declare play function to play Pinochle game
         static_assert(std::is_base_of<CardSet<r,s>, d>::value == true, "Deck does not use the given rank and suit");
         bool collect_books(int playerNumber);
@@ -25,7 +25,7 @@ class GoFishGame: public Game{
         d goFishDeck;
         std::vector< CardSet<r, s> > goFishHands;
         std::vector< CardSet<r, s> > goFishBooks;
-        std::map<std::string,int> goFishScores;
+        std::vector<std::pair<std::string,int> > goFishScores;
         std::vector<int> invalidPlayers;
         virtual void deal();
         bool turn(int playerNumber);

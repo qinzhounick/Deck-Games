@@ -9,20 +9,30 @@
 #include <memory>
 
 using namespace std;
-const int GAME_NAME = 1;
+
 //create function to create game
 shared_ptr<Game> create(int argc, const char *argv[]) {
     shared_ptr<Game> game;  //declare game shared pointer
 
     string gameName = argv[GAME_NAME];  //get game name
 
+    
+    
     //pass game objects to the game shared pointer
     if(gameName == "Pinochle") {
         game = make_shared<PinochleGame>(argc, argv);
     } else if (gameName == "HoldEm") {
         game = make_shared<HoldEmGame>(argc, argv);
     } else if (gameName == "GoFish") {
-        game = make_shared<GoFishGame>(argc, argv);
+        string deckType = argv[DECK_NAME];
+        if(deckType == "Pinochle"){
+            game = make_shared<GoFishGame <PinochleRank, Suit, PinochleDeck > >(argc, argv);
+        }else if(deckType == "HoldEm"){
+            game = make_shared<GoFishGame <HoldEmRank, Suit, HoldEmDeck > >(argc, argv);
+        }else if(deckType == "Uno"){
+            game = make_shared<GoFishGame <UnoRank, Color, UnoDeck > >(argc, argv);
+        }
+        
     }
     return game;
 }
