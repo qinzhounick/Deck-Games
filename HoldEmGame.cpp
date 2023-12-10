@@ -351,7 +351,7 @@ bool flushOrXhigh_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Ca
     while(i>=0 && j>=0){
         if(player1Cards[i]._rank == player2Cards[j]._rank){
             sameCards[k] = true;
-        }else if(player1Cards[i]._rank < player2Cards[j]._rank && sameCards[k-1]){
+        }else if(player1Cards[i]._rank < player2Cards[j]._rank && sameCards[k-NULL_VALUE]){
             return true;
         }
 
@@ -493,7 +493,7 @@ bool pair_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Card<HoldE
         if(player1Cards[i]._rank == player2Cards[j]._rank){
             sameCards[k] = true;
         // find the single card that determine which player wins over the other
-        }else if(player1Cards[i]._rank < player2Cards[j]._rank && sameCards[k-1]){
+        }else if(player1Cards[i]._rank < player2Cards[j]._rank && sameCards[k-NULL_VALUE]){
             return true;
         }
 

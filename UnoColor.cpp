@@ -6,15 +6,15 @@ using namespace std;
 std::ostream & operator<< (std::ostream& os, const Color& c) {
     //output all ranks
     if(c==Color::red){
-        os <<  "red";
+        os <<  "Red";
     }else if(c==Color::blue){
-        os <<  "blue";
+        os <<  "Blue";
     }else if(c==Color::green){
-        os <<  "green";
+        os <<  "Green";
     }else if(c==Color::yellow){
-        os <<  "yellow";
+        os <<  "Yellow";
     }else if(c==Color::black){
-        os <<  "black";
+        os <<  "Black";
     }else if(c==Color::undefined){
         os <<  "?";
     }

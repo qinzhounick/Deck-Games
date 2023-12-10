@@ -7,6 +7,7 @@
 #include "Card_T.h"
 
 using namespace std;
+const int NULL_VALUE = 1;
 
 //base template class CardSet
 template <typename R, typename S>
@@ -19,6 +20,8 @@ class CardSet {
         CardSet<R,S> & operator>> (CardSet<R,S> & c);
         //print function to print cards in vector cards
         void print(ostream& os, size_t size);
+        //print books for GoFishGame
+        void printBooks(ostream& os);
         //is_empty function to check if vector cards is empty
         bool is_empty();
         //Defualt constructor
@@ -41,11 +44,11 @@ class CardSet {
         typedef S suit_type;
 
         void clear(); // clear the cards
-        void erase(iter begin, iter end);
+        void erase(iter begin, iter end); // erase card
         void collect(CardSet<R, S> & col); //collect cards from CardSet back to deck
         
-        void collect_if(CardSet<R, S> deck, std::function<bool (Card<R, S>&)> pred);
-        bool request(CardSet<R, S> & cardset, R & rank);
+        void collect_if(CardSet<R, S> & deck, std::function<bool (Card<R, S>&)> pred); //only collect cards that meet a certain criteria
+        bool request(CardSet<R, S> & cardset, R & rank); // request card from the player or deck
         
 };
 

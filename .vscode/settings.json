@@ -40,6 +40,11 @@
         "utility": "cpp",
         "typeinfo": "cpp",
         "typeindex": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "list": "cpp",
+        "hashtable": "cpp",
+        "ctime": "cpp",
+        "bitset": "cpp",
+        "cfenv": "cpp"
     }
 }
