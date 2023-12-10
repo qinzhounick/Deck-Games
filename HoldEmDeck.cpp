@@ -3,6 +3,7 @@
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: Source file for HoldEmDeck
 //  define the "shift" operator and prefix increment operator, in the constructor, push back the card once
+//  define printRank and getRank helper functions for correct type comparison
 
 #include "HoldEmDeck.h"
 
@@ -92,6 +93,7 @@ HoldEmRank & operator++ (HoldEmRank& h) {
     return h;
 }
 
+// helper function to print out the rank so we can get the string and compare with the input rank
 std::string printRank(HoldEmRank r){
     if(r==HoldEmRank::two){
         return "2";
@@ -132,6 +134,7 @@ HoldEmDeck::HoldEmDeck() {
     }
 }
 
+// helper function to get the string of the rank and return the "rank" type of the input rank for comparison
 HoldEmRank HoldEmDeck::getRank(std::string & s){
     if(s=="2"){
         return HoldEmRank::two;

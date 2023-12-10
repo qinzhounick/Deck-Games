@@ -4,6 +4,7 @@
 //Summary: Header file for PinochleDeck
 //  declare the rank for Pinochle deck, override the "shift" operator and prefix increment operator,
 //  declare the derived class(from Deck) of Pinochle deck, and a public constructor.
+//  declare printRank and getRank helper functions for correct type comparison
 
 #pragma once
 #include "Deck.h"

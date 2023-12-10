@@ -77,7 +77,7 @@ int main(int argc, const char *argv[]) {
         cout << "Invalid players! Pinochle game takes four players. Please try again." << endl;
         return INVALID_INPUT;
     }else if(gameName == "HoldEm" && (argc > HOLDEM_MAX_ARGC || argc < HOLDEM_MIN_ARGC)){
-        cout << "Invalid players! HoldEm game takes 4-11 players. Please try again." << endl;
+        cout << "Invalid players! HoldEm game takes 2-9 players. Please try again." << endl;
         return INVALID_INPUT;
     }else if(gameName == "GoFish" && !GOFISH_DECK){
         cout << "Invalid deck! GoFish game requires one of the following decks: HoldEm, Pinochle, Uno. Please try again." << endl;

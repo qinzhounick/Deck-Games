@@ -1,3 +1,10 @@
+//File Name: GoFishGame.cpp
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: source file for GoFishGame
+//  define constructor and functions including collect_books, turn, deal, player
+//  define the specializations for constructor and collect_books for different ranks and decks
+
 #include "GoFishGame.h"
 
 using namespace std;
@@ -9,6 +16,7 @@ const int GOFISH_PRINT = 20;
 const int FIRST_PLAYER = 0;
 const int SECOND_PLAYER = 1;
 
+// default constructor for GoFishGame
 template <typename r, typename s, typename d>
 GoFishGame<r,s,d>::GoFishGame(int argc, const char * argv[]): Game(argc, argv){
     deckType = argv[DECK_NAME];
@@ -16,9 +24,10 @@ GoFishGame<r,s,d>::GoFishGame(int argc, const char * argv[]): Game(argc, argv){
     for(int i = GOFISH_INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
         goFishBooks.push_back(emptyCardSet);
-        goFishScores.push_back(std::make_pair(argv[i], 0));
+        goFishScores.push_back(std::make_pair(argv[i], 0)); // initialize the score vector with pairs of player+score
     }
     
+    // default with HoldEmRank
     for(HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank){
         int count = std::count_if(goFishDeck.cards.begin(), goFishDeck.cards.end(), [&rank](const Card<HoldEmRank,Suit> & card) { return card._rank == rank;});
         if(count < GOFISH_ARGC){
@@ -100,6 +109,7 @@ bool GoFishGame<r,s,d>::turn(int playerNumber){
         cout << "E.g. If you want to request from the first player, input '1'; if third player, input '3'..." << endl;
         cin >> input_player;
         
+        // check if the input for player is player's index, not anything else
         if(isNumeric(input_player)){
             input_player_index = stoi(input_player) - NULL_VALUE;
         }else{
@@ -107,23 +117,26 @@ bool GoFishGame<r,s,d>::turn(int playerNumber){
             continue;
         }
         
+        // get the input rank in string type
         auto predicate = [&input_rank](const Card<r,s> & card) { 
                             std::string str = printRank(card._rank);  // convert "rank" type to string type for comparison
                             return str == input_rank;
                         };
 
+        // check if the input rank is in the current player's hand and the input player's index exists
         if(std::find_if(goFishHands[playerNumber].begin(), 
                         goFishHands[playerNumber].end(), 
                         predicate) != goFishHands[playerNumber].end()
            && input_player_index>=0 && input_player_index<(int)names.size() 
-           && input_player_index!=playerNumber){
+           && input_player_index!=playerNumber 
+           && std::find(invalidPlayers.begin(),invalidPlayers.end(),input_player_index)==invalidPlayers.end()){
 
             incorrect_input = false;
             
         }
         // check if the input player is in the current players pool
         if(input_player_index<0 || input_player_index >=(int)names.size() 
-        || input_player_index==playerNumber){
+        || input_player_index==playerNumber || std::find(invalidPlayers.begin(),invalidPlayers.end(),input_player_index)!=invalidPlayers.end()){
             cout << "Invalid player index. Please try again." << endl;
         }
         // check if the requested card is in the current player's hand
@@ -251,6 +264,7 @@ int GoFishGame<r,s,d>::play(){
             while(turn(i)){}
         }
 
+        // print the round number and how many books all players have made so far
         cout << "Round " << round << " finished:" << endl;
         for(int i = 0; i < players; i++){
             int bookNum = std::distance(goFishBooks[i].begin(), goFishBooks[i].end()) / 4;
@@ -258,34 +272,38 @@ int GoFishGame<r,s,d>::play(){
         }
         cout << endl;
 
+        // get the total of all books have made
         int sumBooks = 0;
         for(auto & score: goFishScores){
             sumBooks += score.second;
         }
 
+        // the rules for three decks, each one represents the max books a deck can have
         const int HoldEmMax = 13;
-        const int PinochleMax = 26;
+        const int PinochleMax = 12;
         const int UnoMax = 28;
         
+        // make bool variables for each deck to check the game-over state
         bool HoldEmCondition = (sumBooks==HoldEmMax && deckType=="HoldEm");
         bool PinochleCondition = (sumBooks==PinochleMax && deckType=="Pinochle");
         bool UnoCondition = (sumBooks==UnoMax && deckType=="Uno");
         bool gameEndCondition = (goFishDeck.is_empty() && (HoldEmCondition || PinochleCondition || UnoCondition));
+        // if the maximum number of books has reached, or all players are out of game, or there is only player left, game over
         if(gameEndCondition || names.empty() || (int)names.size()==1){
             GAME_NOT_END = false;
             if((int)names.size()==1){
                 for(int i = 0; i < players; i++){
                     if(!std::count(invalidPlayers.begin(),invalidPlayers.end(),i)){
-                        goFishDeck.collect(goFishHands[i]);
-                        invalidPlayers.push_back(i);
+                        goFishDeck.collect(goFishHands[i]); // deck collects all cards in the player's hand if the player is out of game(invalid player)
+                        invalidPlayers.push_back(i); // put that player in the invalidPlayer vector and generate the message
                         cout << "Player " << names[i] << " is removed from the game" << endl;
                     }
                 }
             }
-            //print the players that has the most books
+
+            //  print the players that has the most books
             //  after game ends, we get the book numbers for each player
             //  then, we collect the cards back into goFishDeck
-
             std::sort(goFishScores.begin(), goFishScores.end(), cmp);
             
             int prev_bookNum = 0;
@@ -305,6 +323,7 @@ int GoFishGame<r,s,d>::play(){
 
 
 //-----------------------------------------------Class Template Specializations-----------------------------------------------------
+// specialization for GoFishGame constructor with HoldEmRank, Suit, and HoldEmDeck
 template <>
 GoFishGame<HoldEmRank, Suit, HoldEmDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     deckType = argv[DECK_NAME];
@@ -312,7 +331,7 @@ GoFishGame<HoldEmRank, Suit, HoldEmDeck>::GoFishGame(int argc, const char* argv[
     for(int i = GOFISH_INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
         goFishBooks.push_back(emptyCardSet);
-        goFishScores.push_back(std::make_pair(argv[i], 0));
+        goFishScores.push_back(std::make_pair(argv[i], 0)); // initialize the score vector with pairs of player+score
     }
     for(HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank){
         int count = std::count_if(goFishDeck.begin(), goFishDeck.end(), [&rank](const Card<HoldEmRank,Suit> & card) { return card._rank == rank;});
@@ -323,7 +342,7 @@ GoFishGame<HoldEmRank, Suit, HoldEmDeck>::GoFishGame(int argc, const char* argv[
 }
 
 
-
+// specialization for GoFishGame constructor with PinochleRank, Suit, and PinochleDeck
 template <>
 GoFishGame<PinochleRank, Suit, PinochleDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     deckType = argv[DECK_NAME];
@@ -331,7 +350,7 @@ GoFishGame<PinochleRank, Suit, PinochleDeck>::GoFishGame(int argc, const char* a
     for(int i = GOFISH_INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
         goFishBooks.push_back(emptyCardSet);
-        goFishScores.push_back(std::make_pair(argv[i], 0)); 
+        goFishScores.push_back(std::make_pair(argv[i], 0));  // initialize the score vector with pairs of player+score
     }
     for(PinochleRank rank = PinochleRank::nine; rank <= PinochleRank::ace; ++rank){
         int count = std::count_if(goFishDeck.begin(), goFishDeck.end(), [&rank](const Card<PinochleRank,Suit> & card) { return card._rank == rank;});
@@ -341,6 +360,7 @@ GoFishGame<PinochleRank, Suit, PinochleDeck>::GoFishGame(int argc, const char* a
     }  
 }
 
+// specialization for GoFishGame constructor with UnoRank, Suit, and UnoDeck
 template <>
 GoFishGame<UnoRank, Color, UnoDeck>::GoFishGame(int argc, const char* argv[]): Game(argc, argv){
     deckType = argv[DECK_NAME];
@@ -348,7 +368,7 @@ GoFishGame<UnoRank, Color, UnoDeck>::GoFishGame(int argc, const char* argv[]): G
     for(int i = GOFISH_INDEX; i<argc; i++) {  //repeat for the number of players given
         goFishHands.push_back(emptyCardSet);  //initialize the hands and books to avoid null
         goFishBooks.push_back(emptyCardSet);
-        goFishScores.push_back(std::make_pair(argv[i], 0)); 
+        goFishScores.push_back(std::make_pair(argv[i], 0));  // initialize the score vector with pairs of player+score
     }
     for(UnoRank rank = UnoRank::zero; rank <= UnoRank::blank; ++rank){
         int count = std::count_if(goFishDeck.begin(), goFishDeck.end(), [&rank](const Card<UnoRank,Color> & card) { return card._rank == rank;});
@@ -360,15 +380,19 @@ GoFishGame<UnoRank, Color, UnoDeck>::GoFishGame(int argc, const char* argv[]): G
 
 
 //-----------------------------------------------collect_books Specializations-----------------------------------------------------
+// specialization for collect_books with HoldEmRank, Suit, and HoldEmDeck
 template <>
 bool GoFishGame<HoldEmRank, Suit, HoldEmDeck>::collect_books(int playerNumber){
     bool flag = false;
+    // we go through HoldEmRank to check for 4 of kind
     for(HoldEmRank rank = HoldEmRank::two; rank <= HoldEmRank::ace; ++rank){
         auto predicate = [&rank](const Card<HoldEmRank,Suit> & card) { return card._rank == rank;};
+        // get the count of cards with the same rank and if there are four cards, put it in book
         int count = std::count_if(goFishHands[playerNumber].begin(), goFishHands[playerNumber].end(), predicate);
         if(count >= GOFISH_BOOK_LEN){
             flag = true;
             goFishBooks[playerNumber].collect_if(goFishHands[playerNumber],predicate);
+            //calculate scores and update
             int bookNum = std::distance(goFishBooks[playerNumber].begin(), goFishBooks[playerNumber].end()) / GOFISH_BOOK_LEN;
             goFishScores[playerNumber].second=bookNum;
             return flag;
@@ -378,16 +402,20 @@ bool GoFishGame<HoldEmRank, Suit, HoldEmDeck>::collect_books(int playerNumber){
     return flag;
 }
 
+// specialization for collect_books with PinochleRank, Suit, and PinochleDeck
 template <>
 bool GoFishGame<PinochleRank, Suit, PinochleDeck>::collect_books(int playerNumber){
     bool flag = false;
+    // we go through PinochleRank to check for 4 of kind
     for(PinochleRank rank = PinochleRank::nine; rank <= PinochleRank::ace; ++rank){
         auto predicate = [&rank](const Card<PinochleRank,Suit> & card) { return card._rank == rank;};
+        // get the count of cards with the same rank and if there are four cards, put it in book
         int count = std::count_if(goFishHands[playerNumber].begin(), goFishHands[playerNumber].end(), predicate);
+        // since there are two poker decks in Pincochle deck, we need to make sure if greater than 4, then collect books
         if(count >= GOFISH_BOOK_LEN){
             flag = true;
             goFishBooks[playerNumber].collect_if(goFishHands[playerNumber],predicate);
-
+            //calculate scores and update
             int bookNum = std::distance(goFishBooks[playerNumber].begin(), goFishBooks[playerNumber].end()) / GOFISH_BOOK_LEN;
             goFishScores[playerNumber].second=bookNum;
             return flag;
@@ -396,16 +424,19 @@ bool GoFishGame<PinochleRank, Suit, PinochleDeck>::collect_books(int playerNumbe
     return flag;
 }
 
+// specialization for collect_books with UnoRank, Suit, and UnoDeck
 template <>
 bool GoFishGame<UnoRank, Color, UnoDeck>::collect_books(int playerNumber){
     bool flag = false;
+    // we go through UnoRank to check for 4 of kind
     for(UnoRank rank = UnoRank::zero; rank <= UnoRank::blank; ++rank){
         auto predicate = [&rank](const Card<UnoRank,Color> & card) { return card._rank == rank;};
+        // get the count of cards with the same rank and if there are four cards, put it in book
         int count = std::count_if(goFishHands[playerNumber].begin(), goFishHands[playerNumber].end(), predicate);
         if(count >= GOFISH_BOOK_LEN){
             flag = true;
             goFishBooks[playerNumber].collect_if(goFishHands[playerNumber],predicate);
-
+            //calculate scores and update
             int bookNum = std::distance(goFishBooks[playerNumber].begin(), goFishBooks[playerNumber].end()) / GOFISH_BOOK_LEN;
             goFishScores[playerNumber].second=bookNum;
             return flag;

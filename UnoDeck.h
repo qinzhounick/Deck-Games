@@ -1,3 +1,11 @@
+//File Name: UnoDeck.h
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: Header file for UnoDeck
+//  declare the rank for Uno deck, override the "shift" operator and prefix increment operator,
+//  declare the derived class(from Deck) of Uno deck, and a public constructor.
+//  declare printRank and getRank helper functions for correct type comparison
+
 #pragma once
 
 #include "Deck.h"

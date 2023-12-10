@@ -75,7 +75,6 @@ int HoldEmGame::play() {
             HoldEmGame::playerStruct tmp(holdEmHands[n], names[n], HoldEmHandRank::undefined); //
             playerS.push_back(tmp); //push back player struct
         }
-        cout << "before the for loop point" << endl;
         for(HoldEmGame::playerStruct & x: playerS){  //loop through vector
             auto boardCards= board.begin();
             x._cardset.add_card(*boardCards++);
@@ -353,6 +352,8 @@ bool flushOrXhigh_helper(vector<Card<HoldEmRank, Suit> > player1Cards, vector<Ca
             sameCards[k] = true;
         }else if(player1Cards[i]._rank < player2Cards[j]._rank && sameCards[k-NULL_VALUE]){
             return true;
+        }else if(player1Cards[i]._rank > player2Cards[j]._rank && sameCards[k-NULL_VALUE]){
+            return false;
         }
 
         i--;

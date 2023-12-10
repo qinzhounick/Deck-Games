@@ -1,3 +1,10 @@
+//File Name: UnoDeck.cpp
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: Source file for UnoDeck
+//  define the "shift" operator and prefix increment operator, in the constructor, push back the card once
+//  define printRank and getRank helper functions for correct type comparison
+
 #include "UnoDeck.h"
 
 using namespace std;

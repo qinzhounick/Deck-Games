@@ -38,6 +38,7 @@ class CardSet {
         typename std::vector<Card<R,S> >::iterator end(); //end function
         Card<R,S> back(); //back function
 
+        //define types
         typedef Card<R, S> card_type;
         typedef typename vector<Card<R, S>>::iterator iter;
         typedef R rank_type;

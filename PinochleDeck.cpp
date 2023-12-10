@@ -3,6 +3,7 @@
 //Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
 //Summary: Source file for PinochleDeck
 //  Define the "shift" operator and prefix increment operator, in the constructor, push back the card twice
+//  Define printRank and getRank helper functions for correct type comparison
 
 #include "PinochleDeck.h"
 
@@ -59,7 +60,8 @@ PinochleRank & operator++ (PinochleRank & r){
     return r;
 }
 
-//print PinochleRank
+// print PinochleRank
+// helper function to print out the rank so we can get the string and compare with the input rank
 std::string printRank(PinochleRank r){
     if(r==PinochleRank::nine){
         return "9";
@@ -90,6 +92,7 @@ PinochleDeck::PinochleDeck(){
     }
 }
 
+// helper function to get the string of the rank and return the "rank" type of the input rank for comparison
 PinochleRank PinochleDeck::getRank(std::string & s){
     if(s=="9"){
         return PinochleRank::nine;

@@ -4,6 +4,7 @@
 //Summary: Header file for HoldEmDeck
 //  declare the rank for HoldEm deck, override the "shift" operator and prefix increment operator,
 //  declare the deriived class(from Deck) of HoldEm deck, and a public constructor.
+//  declare printRank and getRank helper functions for correct type comparison
 
 #pragma once
 #include "Deck.h"

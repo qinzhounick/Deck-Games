@@ -141,18 +141,19 @@ template<typename R, typename S>
 void CardSet<R,S>::collect_if(CardSet<R,S> & deck, std::function<bool(Card<R,S>&)> pred) {
     std::copy_if(deck.begin(), deck.end(), std::back_inserter(cards), pred); // if the card exists, deck collects the card
     auto start = std::remove_if(deck.begin(), deck.end(), pred); // remove the card
-    deck.cards.erase(start, deck.end()); // erase the null value
+    deck.erase(start, deck.end()); // erase the null value
 }
 
 
 // request card from the deck or the players
 template<typename R, typename S>
 bool CardSet<R,S>::request(CardSet<R, S> & cardset, R & rank) {
+    //find a card that has the requested rank
     auto iter = std::find_if(cardset.begin(), cardset.end(), [&rank](const Card<R, S>& card) {
         return card._rank == rank;
     });
 
-    if (iter == cardset.end()) {
+    if (iter == cardset.end()) { //if rank not found, return false
         return false;
     }
 

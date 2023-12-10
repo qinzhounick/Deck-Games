@@ -1,3 +1,9 @@
+//File Name: UnoColor.cpp
+//Authors: Qinzhou(Nick) Song, Xinyu(Jack) Li
+//Email: qinzhounick@wustl.edu, l.xinyujack@wustl.edu
+//Summary: Source file for UnoColor
+//  define the shift operator and increment operator
+
 #include "UnoColor.h"
 
 using namespace std;
